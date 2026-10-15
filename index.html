@@ -96,26 +96,47 @@
     .section-head h2 { font-size:clamp(28px, 6vw, 42px); line-height:1; letter-spacing:-.06em; margin:8px 0 6px; }
     .section-head p { color:var(--muted); font-size:13px; margin:0 auto; max-width:440px; line-height:1.45; }
     
-    /* Categorias CENTRALIZADAS no eixo horizontal */
+    /* Categorias: Ajuste da rolagem para o mobile com a 1ª centralizada */
     .category-nav-wrapper {
-      display: flex;
-      justify-content: center;
       width: 100%;
       margin: 10px 0 16px;
+      position: relative;
+      overflow: hidden;
     }
     .category-tabs {
       display: flex;
-      justify-content: center;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       overflow-x: auto;
-      padding: 4px 8px 14px;
+      /* O padding lateral faz com que o primeiro item fique no centro da tela ao iniciar no mobile */
+      padding: 6px calc((100% - 150px) / 2) 14px;
+      scroll-snap-type: x mandatory;
       scrollbar-width: none;
-      max-width: 100%;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      scroll-behavior: smooth;
     }
     .category-tabs::-webkit-scrollbar { display:none; }
-    .tab { flex:0 0 auto; border:1px solid var(--line); background:white; padding:11px 16px; border-radius:999px; font-size:12px; font-weight:850; cursor:pointer; transition: .2s; }
-    .tab.active { background:var(--ink); color:white; border-color:var(--ink); }
+    
+    .tab {
+      flex: 0 0 auto;
+      scroll-snap-align: center;
+      border: 1px solid var(--line);
+      background: white;
+      padding: 11px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 850;
+      cursor: pointer;
+      transition: transform .22s ease, background .22s ease, color .22s ease, border-color .22s ease;
+      white-space: nowrap;
+    }
+    .tab.active {
+      background: var(--ink);
+      color: white;
+      border-color: var(--ink);
+      transform: scale(1.04);
+    }
     
     /* Carrossel Contínuo */
     .carousel-shell { position:relative; padding:10px 0 22px; }
@@ -282,6 +303,15 @@
     .toast { position:fixed; left:50%; bottom:18px; transform:translate(-50%,20px); opacity:0; pointer-events:none; background:#111; color:white; padding:12px 16px; border-radius:999px; font-size:12px; font-weight:800; transition:.2s; z-index:10; width:max-content; max-width:calc(100% - 30px); }
     .toast.show { opacity:1; transform:translate(-50%,0); }
 
+    /* Adaptações para telas médias e grandes (Desktop) */
+    @media (min-width:760px) {
+      .category-tabs {
+        justify-content: center;
+        padding: 6px 16px 14px;
+        scroll-snap-type: none;
+      }
+    }
+
     @media (min-width:860px) {
       .wrap { width:min(1120px,100% - 56px); }
       .hero { padding:64px 0 46px; }
@@ -332,7 +362,7 @@
       </div>
     </section>
 
-    <!-- Catálogo de Modelos (Rolagem Contínua e Categorias Centralizadas) -->
+    <!-- Catálogo de Modelos (Rolagem Contínua e Categorias com início centralizado) -->
     <section class="wrap section" id="modelos">
       <div class="section-head">
         <div class="eyebrow" style="margin-bottom:6px;">Escolha seu visual</div>
@@ -340,7 +370,7 @@
         <p>Deslize continuamente por todos os 200 modelos ou clique nas categorias abaixo para ir direto.</p>
       </div>
       
-      <!-- Categorias Centralizadas -->
+      <!-- Categorias -->
       <div class="category-nav-wrapper">
         <nav class="category-tabs" id="categoryTabs" role="tablist" aria-label="Categorias de modelos">
           <button class="tab active" role="tab" aria-selected="true" data-category="1" id="tab-1">01 · Neon (1-50)</button>
@@ -350,7 +380,7 @@
         </nav>
       </div>
 
-      <!-- Carrossel com todos os 200 modelos em sequência contínua -->
+      <!-- Carrossel de modelos -->
       <div class="carousel-shell">
         <button class="carousel-nav-btn prev" id="prevModel" type="button" aria-label="Modelo anterior">←</button>
         <div class="carousel-track" id="carouselTrack" role="region" aria-live="polite" aria-label="Carrossel contínuo de modelos"></div>
@@ -491,7 +521,7 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
-    // WhatsApp configurado para +55 84 98706-5678
+    // WhatsApp comercial configurado
     const WHATSAPP = "5584987065678";
     const PRECO_BASE = 35.00;
     const PRICE_TIERS = [
@@ -508,6 +538,7 @@
 
     // Elementos DOM
     const track = document.getElementById("carouselTrack");
+    const categoryTabs = document.getElementById("categoryTabs");
     const tabs = [...document.querySelectorAll(".tab")];
     const selectedLabel = document.getElementById("selectedModel");
     const selectedThumbImg = document.getElementById("selectedThumbImg");
@@ -565,7 +596,7 @@
       }
     }
 
-    // Renderização contínua dos modelos
+    // Renderização dos modelos
     function renderContinuousCatalog() {
       const fragment = document.createDocumentFragment();
 
@@ -625,6 +656,19 @@
       updateActiveCard();
     }
 
+    // Centraliza a aba ativa no scroll da barra de categorias
+    function centerTab(categoryId, smooth = true) {
+      if (!categoryTabs) return;
+      const activeTab = tabs.find(t => Number(t.dataset.category) === categoryId);
+      if (!activeTab) return;
+      
+      const scrollPos = activeTab.offsetLeft - (categoryTabs.clientWidth - activeTab.clientWidth) / 2;
+      categoryTabs.scrollTo({
+        left: Math.max(0, scrollPos),
+        behavior: smooth ? "smooth" : "auto"
+      });
+    }
+
     function updateActiveTab(categoryId) {
       if (currentCategory === categoryId) return;
       currentCategory = categoryId;
@@ -633,6 +677,7 @@
         tab.classList.toggle("active", isActive);
         tab.setAttribute("aria-selected", isActive ? "true" : "false");
       });
+      centerTab(categoryId, true);
     }
 
     function updateActiveCard() {
@@ -657,7 +702,6 @@
       }
     }
 
-    // Seleção de Modelo
     function selectModel(n, scroll = true, updateHash = true) {
       selectedNumber = n;
       const category = CATEGORIES.find(c => n >= c.start && n <= c.end);
@@ -732,7 +776,6 @@
       totalPriceEl.textContent = money(total);
     }
 
-    // Quantidade unitária
     function setQuantity(val) {
       const clamped = Math.max(10, Math.min(500, Number(val)));
       quantity.value = clamped;
@@ -765,7 +808,7 @@
       });
     });
 
-    // Abas
+    // Clique nas abas
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
         activateCarouselInteraction();
@@ -773,17 +816,18 @@
         const category = CATEGORIES.find(c => c.id === catId);
         if (category) {
           selectModel(category.start, true, true);
+          centerTab(catId, true);
         }
       });
     });
     
-    // Rolagem
+    // Rolagem do carrossel
     track.addEventListener("scroll", () => {
       activateCarouselInteraction();
       requestAnimationFrame(updateActiveCard);
     }, { passive: true });
     
-    // Setas laterais
+    // Botões de navegação lateral
     document.getElementById("prevModel").addEventListener("click", () => {
       activateCarouselInteraction();
       const prev = Math.max(1, selectedNumber - 1);
@@ -851,6 +895,9 @@
           if (target) setTimeout(() => target.scrollIntoView(), 120);
         }
       }
+
+      // Garante que a 1ª categoria comece centralizada no mobile
+      requestAnimationFrame(() => centerTab(1, false));
     }
 
     initApp();
