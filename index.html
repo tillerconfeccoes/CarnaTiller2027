@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>CarnaTiller 2027 | Modelos prontos</title>
+  <meta name="description" content="Escolha seu modelo de abadá CarnaTiller 2027 e simule seu orçamento online com personalizações.">
+  <style>
+    :root {
+      --green: #39ff14;
+      --pink: #ff1493;
+      --mustard: #d9b65d;
+      --ink: #111111;
+      --paper: #ffffff;
+      --muted: #6b7280;
+      --line: #e8e8e8;
+      --radius: 22px;
+      --shadow: 0 14px 40px rgba(17,17,17,.09);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--paper); color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    button, input, select, textarea { font: inherit; }
+    button, a, input[type="range"] { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; }
+    .wrap { width: min(1120px, 100% - 32px); margin-inline: auto; }
+    
+    /* Topbar */
+    .topbar {
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding: 17px 0; border-bottom:1px solid var(--line);
+    }
+    .brand { display:flex; align-items:center; gap:10px; text-decoration:none; font-weight:950; letter-spacing:-.06em; line-height:.9; }
+    .brand-mark { width:35px; height:35px; display:grid; place-items:center; background:var(--green); border-radius:50% 42% 48% 38%; transform:rotate(-8deg); font-weight:1000; }
+    .brand span:last-child { font-size:18px; }
+    .brand small { display:block; margin-top:4px; font-size:10px; letter-spacing:.18em; font-weight:800; }
+    .pill { border:1px solid var(--ink); border-radius:999px; padding:9px 13px; font-size:12px; font-weight:850; text-decoration:none; white-space:nowrap; }
+
+    /* Hero com layout de 2 colunas para imagem PNG sem fundo */
+    .hero { padding:36px 0 28px; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+      gap: 28px;
+    }
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:900; letter-spacing:.16em; text-transform:uppercase; }
+    .eyebrow:before { content:""; width:23px; height:5px; background:var(--pink); border-radius:99px; }
+    h1 { font-size:clamp(38px, 8.5vw, 70px); line-height:.92; letter-spacing:-.075em; margin:16px 0 16px; }
+    h1 .neon { position:relative; z-index:0; white-space:nowrap; }
+    h1 .neon:after { content:""; position:absolute; z-index:-1; left:-2%; right:-3%; bottom:4%; height:24%; background:var(--green); transform:rotate(-2deg); border-radius:4px; }
+    .hero p { max-width:540px; color:#525252; font-size:15px; line-height:1.6; margin:0 0 22px; }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:10px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:46px; padding:12px 18px; border:0; border-radius:999px; background:var(--ink); color:white; font-weight:850; text-decoration:none; cursor:pointer; }
+    .btn.green { background:var(--green); color:var(--ink); }
+    .btn.outline { background:white; color:var(--ink); border:1px solid var(--line); }
+    .hero-stamp { margin-top:24px; display:flex; align-items:center; gap:10px; font-size:11px; color:#555; font-weight:750; }
+    .stamp-dots { display:flex; gap:4px; }
+    .stamp-dots i { width:9px; height:9px; border-radius:50%; display:block; }
+
+    /* Imagem média PNG sem fundo à direita */
+    .hero-media {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .hero-media-glow {
+      position: absolute;
+      width: 75%;
+      height: 75%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(57, 255, 20, 0.22) 0%, rgba(255, 20, 147, 0.15) 60%, transparent 80%);
+      filter: blur(28px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .hero-png {
+      position: relative;
+      z-index: 1;
+      width: min(340px, 85vw);
+      max-height: 420px;
+      object-fit: contain;
+      filter: drop-shadow(0 18px 30px rgba(0,0,0,.15));
+      transition: transform .35s ease;
+    }
+    .hero-png:hover { transform: scale(1.03) rotate(-1.5deg); }
+
+    /* Modelos & Carrossel */
+    .section { padding:30px 0 42px; }
+    .section-head { text-align: center; margin-bottom: 22px; }
+    .section-head h2 { font-size:clamp(28px, 6vw, 42px); line-height:1; letter-spacing:-.06em; margin:8px 0 6px; }
+    .section-head p { color:var(--muted); font-size:13px; margin:0 auto; max-width:440px; line-height:1.45; }
+    
+    /* Categorias CENTRALIZADAS no eixo horizontal */
+    .category-nav-wrapper {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin: 10px 0 16px;
+    }
+    .category-tabs {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 4px 8px 14px;
+      scrollbar-width: none;
+      max-width: 100%;
+    }
+    .category-tabs::-webkit-scrollbar { display:none; }
+    .tab { flex:0 0 auto; border:1px solid var(--line); background:white; padding:11px 16px; border-radius:999px; font-size:12px; font-weight:850; cursor:pointer; transition: .2s; }
+    .tab.active { background:var(--ink); color:white; border-color:var(--ink); }
+    
+    /* Carrossel Contínuo */
+    .carousel-shell { position:relative; padding:10px 0 22px; }
+    .carousel-track {
+      display:flex; align-items:center; gap:14px; overflow-x:auto; padding:14px calc((100% - min(74vw, 310px))/2) 22px;
+      scroll-snap-type:x mandatory; scrollbar-width:none; overscroll-behavior-x:contain;
+    }
+    .carousel-track::-webkit-scrollbar { display:none; }
+    .model-card {
+      flex:0 0 min(74vw, 310px); scroll-snap-align:center; position:relative; border:1px solid var(--line);
+      border-radius:24px; overflow:hidden; background:#f8f8f8; transform:scale(.91); opacity:.72;
+      transition:transform .25s ease, opacity .25s ease, box-shadow .25s ease; box-shadow:none;
+    }
+    .model-card.is-active { transform:scale(1); opacity:1; box-shadow:var(--shadow); border-color:#d6d6d6; }
+    .model-art { aspect-ratio: .78; position:relative; overflow:hidden; display:grid; place-items:center; background:
+      radial-gradient(circle at 12% 12%, var(--pink) 0 3px, transparent 4px),
+      radial-gradient(circle at 83% 22%, var(--mustard) 0 5px, transparent 6px),
+      radial-gradient(circle at 20% 82%, var(--green) 0 5px, transparent 6px),
+      linear-gradient(145deg,#fff 0%,#fdfdfd 58%,#f5f5f5 100%);
+    }
+    .model-art:before, .model-art:after { content:""; position:absolute; border-radius:80% 30% 70% 35%; width:65%; height:12%; background:var(--green); top:12%; left:-10%; transform:rotate(-34deg); }
+    .model-art:after { width:53%; height:10%; top:auto; bottom:14%; left:auto; right:-8%; background:var(--pink); transform:rotate(-35deg); }
+    .model-art img { width:100%; height:100%; object-fit:cover; display:block; position:absolute; inset:0; z-index:1; }
+    .placeholder-logo { position:relative; z-index:0; text-align:center; transform:rotate(-5deg); padding:18px; }
+    .placeholder-logo .crown { font-size:29px; line-height:1; color:var(--mustard); font-weight:900; }
+    .placeholder-logo strong { display:block; font-size:clamp(31px,8vw,48px); line-height:.83; letter-spacing:-.09em; font-weight:1000; }
+    .placeholder-logo small { display:block; font-weight:950; font-size:22px; letter-spacing:-.05em; margin-top:9px; }
+    .placeholder-logo em { display:inline-block; font-style:normal; font-size:10px; letter-spacing:.2em; font-weight:900; margin-top:12px; }
+    .model-info { padding:14px; background:white; }
+    .model-info-top { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .model-number { font-size:11px; font-weight:950; letter-spacing:.12em; color:#777; }
+    .model-info h3 { margin:5px 0 12px; font-size:17px; letter-spacing:-.04em; }
+    .model-actions { display:flex; gap:8px; }
+    .model-actions button, .model-actions a { flex:1; display:flex; justify-content:center; align-items:center; min-height:39px; border-radius:12px; border:1px solid var(--line); text-decoration:none; font-size:12px; font-weight:850; background:white; cursor:pointer; }
+    .model-actions .choose { background:var(--green); border-color:var(--green); }
+    .model-actions .view { background:white; }
+    
+    .carousel-nav-btn {
+      position: absolute; top: 46%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%;
+      background: white; border: 1px solid var(--line); box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+      display: grid; place-items: center; cursor: pointer; z-index: 5; font-size: 16px; font-weight: bold;
+    }
+    .carousel-nav-btn:hover { background: #f0f0f0; }
+    .carousel-nav-btn.prev { left: 8px; }
+    .carousel-nav-btn.next { right: 8px; }
+    .carousel-hint { text-align:center; color:#777; font-size:11px; margin-top:-4px; }
+    .carousel-hint b { color:var(--ink); }
+
+    /* Barra do Modelo Selecionado com MINIATURA */
+    .selected-bar {
+      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px;
+      border:1px solid var(--line); border-radius:20px; padding:12px 16px; margin-top:16px; background:white;
+    }
+    .selected-model-preview { display:flex; align-items:center; gap:12px; }
+    .selected-thumb-wrap {
+      width:52px; height:52px; border-radius:14px; overflow:hidden; border:1px solid var(--line);
+      background:#f4f4f4; position:relative; flex-shrink:0; display:grid; place-items:center;
+    }
+    .selected-thumb-wrap img { width:100%; height:100%; object-fit:cover; display:none; position:relative; z-index:2; }
+    .selected-thumb-fallback {
+      font-size:14px; font-weight:1000; color:var(--ink); background:var(--green);
+      width:100%; height:100%; display:grid; place-items:center; letter-spacing:-.05em;
+    }
+    .selected-info small { display:block; color:var(--muted); font-size:10px; text-transform:uppercase; letter-spacing:.12em; font-weight:850; }
+    .selected-info strong { display:block; margin-top:3px; font-size:15px; letter-spacing:-.02em; }
+    .selected-bar-actions { display:flex; gap:8px; align-items:center; }
+    .selected-bar-actions .btn { min-height:40px; padding:9px 14px; font-size:12px; }
+
+    /* Simulador de Orçamento Expandido */
+    .quote-section { background:#f7f7f7; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:44px 0; }
+    .quote-layout { display:grid; grid-template-columns:1fr; gap:26px; }
+    .quote-title h2 { font-size:clamp(32px,8vw,54px); letter-spacing:-.07em; line-height:.94; margin:12px 0; }
+    .quote-title p { color:#666; font-size:14px; line-height:1.6; max-width:470px; }
+    
+    .quote-card { background:white; border:1px solid var(--line); border-radius:24px; padding:22px; box-shadow:0 10px 30px rgba(0,0,0,.04); }
+    
+    /* Controle Unitário de Quantidade */
+    .quantity-row { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .quantity-row label { font-size:13px; font-weight:900; }
+    .stepper { display:inline-flex; align-items:center; border:1px solid var(--line); border-radius:14px; background:#fbfbfb; overflow:hidden; }
+    .stepper-btn {
+      width:40px; height:42px; border:0; background:transparent; font-size:20px; font-weight:900;
+      cursor:pointer; display:grid; place-items:center; color:var(--ink);
+    }
+    .stepper-btn:hover { background:var(--line); }
+    .stepper-input {
+      width:60px; height:42px; border:0; background:white; text-align:center; font-size:18px;
+      font-weight:1000; outline:none; border-left:1px solid var(--line); border-right:1px solid var(--line);
+      -moz-appearance: textfield;
+    }
+    .stepper-input::-webkit-outer-spin-button, .stepper-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    
+    input[type="range"] { width:100%; margin:16px 0 6px; accent-color:#111; cursor:pointer; }
+    .range-labels { display:flex; justify-content:space-between; color:#777; font-size:11px; margin-bottom:20px; }
+
+    /* Grupo de Opções / Personalizações */
+    .form-group-grid { display:grid; grid-template-columns:1fr; gap:14px; margin-bottom:18px; }
+    .field-label { display:block; font-size:11px; font-weight:850; text-transform:uppercase; letter-spacing:.08em; color:#444; margin-bottom:6px; }
+    .custom-select {
+      width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 14px;
+      background:#fff; font-size:13px; font-weight:700; color:var(--ink); outline:none; cursor:pointer;
+    }
+    .custom-select:focus { border-color:var(--ink); }
+
+    /* Checkbox & Radios Personalizados */
+    .options-box { background:#fafafa; border:1px solid var(--line); border-radius:16px; padding:14px; margin-bottom:14px; }
+    .radio-pill-group { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px; }
+    .radio-label {
+      display:flex; align-items:center; gap:8px; background:white; border:1px solid var(--line);
+      padding:10px 12px; border-radius:12px; font-size:12px; font-weight:800; cursor:pointer; user-select:none;
+    }
+    .radio-label:has(input:checked) { border-color:var(--ink); background:#111; color:white; }
+    .radio-label input { accent-color: var(--green); }
+
+    .checkbox-urgency {
+      display:flex; align-items:flex-start; gap:10px; cursor:pointer; background:white;
+      border:1px solid var(--line); padding:12px; border-radius:14px; user-select:none;
+    }
+    .checkbox-urgency input { width:18px; height:18px; accent-color:var(--pink); margin-top:1px; }
+    .checkbox-urgency span strong { display:block; font-size:13px; }
+    .checkbox-urgency span small { display:block; color:#777; font-size:11px; margin-top:2px; }
+
+    /* Campo de Endereço Dinâmico */
+    .delivery-address-wrap { margin-top:10px; display:none; }
+    .delivery-address-wrap.active { display:block; }
+    .delivery-address-wrap textarea {
+      width:100%; border:1px solid var(--line); border-radius:12px; padding:10px; font-size:12px;
+      min-height:64px; resize:vertical; outline:none;
+    }
+    .delivery-note { font-size:11px; color:var(--pink); font-weight:800; margin-top:4px; display:block; }
+
+    /* Resumo de Preços */
+    .price-summary { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:20px; }
+    .price-box { background:#f7f7f7; border-radius:15px; padding:14px; }
+    .price-box span { display:block; color:#777; font-size:10px; text-transform:uppercase; letter-spacing:.1em; font-weight:850; }
+    .price-box strong { display:block; margin-top:6px; font-size:clamp(20px,5vw,27px); letter-spacing:-.06em; }
+    .price-box.total { background:var(--ink); color:white; }
+    .price-box.total span { color:#c8c8c8; }
+    
+    .quote-note { font-size:11px; color:#777; line-height:1.5; margin:14px 0 17px; }
+    .quote-card .btn { width:100%; }
+
+    /* Vantagens & Rodapé */
+    .benefits { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:30px 0; }
+    .benefit { border:1px solid var(--line); border-radius:17px; padding:15px; }
+    .benefit i { display:grid; place-items:center; width:30px; height:30px; border-radius:10px; background:var(--pink); font-style:normal; font-weight:1000; margin-bottom:12px; }
+    .benefit:nth-child(2) i { background:var(--green); }
+    .benefit:nth-child(3) i { background:var(--mustard); }
+    .benefit strong { display:block; font-size:13px; }
+    .benefit span { display:block; color:#777; font-size:11px; line-height:1.45; margin-top:5px; }
+    
+    footer { padding:24px 0 34px; border-top:1px solid var(--line); color:#777; font-size:11px; line-height:1.6; }
+    .footer-row { display:flex; flex-direction:column; gap:8px; }
+    .toast { position:fixed; left:50%; bottom:18px; transform:translate(-50%,20px); opacity:0; pointer-events:none; background:#111; color:white; padding:12px 16px; border-radius:999px; font-size:12px; font-weight:800; transition:.2s; z-index:10; width:max-content; max-width:calc(100% - 30px); }
+    .toast.show { opacity:1; transform:translate(-50%,0); }
+
+    @media (min-width:860px) {
+      .wrap { width:min(1120px,100% - 56px); }
+      .hero { padding:64px 0 46px; }
+      .hero-grid { grid-template-columns: 1.15fr 0.85fr; gap: 40px; }
+      .hero-png { width: 100%; max-width: 380px; }
+      .section { padding:48px 0 58px; }
+      .carousel-track { gap:22px; padding-left:calc((100% - 330px)/2); padding-right:calc((100% - 330px)/2); }
+      .model-card { flex-basis:330px; }
+      .quote-layout { grid-template-columns:.85fr 1.15fr; align-items:start; gap:44px; }
+      .form-group-grid { grid-template-columns: 1fr 1fr; }
+      .quote-card { padding:28px; }
+      .benefits { grid-template-columns:repeat(4,1fr); padding:40px 0; }
+      .footer-row { flex-direction:row; justify-content:space-between; align-items:center; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap topbar">
+    <a class="brand" href="#" aria-label="CarnaTiller 2027 - início">
+      <span class="brand-mark">CT</span>
+      <span>CARNA TILLER<small>2027 • TILLER CONFECÇÕES</small></span>
+    </a>
+    <a class="pill" href="#orcamento">Simular orçamento ↗</a>
+  </header>
+
+  <main>
+    <!-- Hero com Imagem PNG sem fundo ao lado direito -->
+    <section class="wrap hero">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">Coleção de Carnaval 2027</div>
+          <h1>Seu bloco.<br>Sua energia.<br><span class="neon">Seu abadá.</span></h1>
+          <p>Escolha um modelo pronto CarnaTiller, encontre seu favorito e peça um orçamento personalizado para sua turma, bloco ou equipe.</p>
+          <div class="hero-actions">
+            <a class="btn green" href="#modelos">Explorar modelos <span aria-hidden="true">↓</span></a>
+            <a class="btn outline" href="#orcamento">Simulador com opções</a>
+          </div>
+          <div class="hero-stamp">
+            <span class="stamp-dots"><i style="background:var(--green)"></i><i style="background:var(--pink)"></i><i style="background:var(--mustard)"></i></span>
+            4 categorias · 200 modelos para escolher
+          </div>
+        </div>
+
+        <div class="hero-media">
+          <div class="hero-media-glow"></div>
+          <!-- Insira sua imagem PNG transparente em imagens/hero-destaque.png -->
+          <img src="imagens/hero-destaque.png" alt="Abadá CarnaTiller 2027 em destaque" class="hero-png" id="heroPng">
+        </div>
+      </div>
+    </section>
+
+    <!-- Catálogo de Modelos (Rolagem Contínua e Categorias Centralizadas) -->
+    <section class="wrap section" id="modelos">
+      <div class="section-head">
+        <div class="eyebrow" style="margin-bottom:6px;">Escolha seu visual</div>
+        <h2>Modelos prontos<span style="color:var(--pink)">.</span></h2>
+        <p>Deslize continuamente por todos os 200 modelos ou clique nas categorias abaixo para ir direto.</p>
+      </div>
+      
+      <!-- Categorias Centralizadas -->
+      <div class="category-nav-wrapper">
+        <nav class="category-tabs" id="categoryTabs" role="tablist" aria-label="Categorias de modelos">
+          <button class="tab active" role="tab" aria-selected="true" data-category="1" id="tab-1">01 · Neon (1-50)</button>
+          <button class="tab" role="tab" aria-selected="false" data-category="2" id="tab-2">02 · Abstrato (51-100)</button>
+          <button class="tab" role="tab" aria-selected="false" data-category="3" id="tab-3">03 · Tropical (101-150)</button>
+          <button class="tab" role="tab" aria-selected="false" data-category="4" id="tab-4">04 · Minimal (151-200)</button>
+        </nav>
+      </div>
+
+      <!-- Carrossel com todos os 200 modelos em sequência contínua -->
+      <div class="carousel-shell">
+        <button class="carousel-nav-btn prev" id="prevModel" type="button" aria-label="Modelo anterior">←</button>
+        <div class="carousel-track" id="carouselTrack" role="region" aria-live="polite" aria-label="Carrossel contínuo de modelos"></div>
+        <button class="carousel-nav-btn next" id="nextModel" type="button" aria-label="Próximo modelo">→</button>
+      </div>
+
+      <div class="carousel-hint">← Deslize livremente por todas as coleções → <b>· O cartão central fica em destaque</b></div>
+      
+      <!-- Barra do Modelo Selecionado com MINIATURA -->
+      <div class="selected-bar">
+        <div class="selected-model-preview">
+          <div class="selected-thumb-wrap" id="selectedThumb">
+            <span class="selected-thumb-fallback" id="selectedThumbFallback">CT</span>
+            <img id="selectedThumbImg" alt="Miniatura do modelo selecionado">
+          </div>
+          <div class="selected-info">
+            <small>Modelo selecionado</small>
+            <strong id="selectedModel">Modelo 001 · Neon</strong>
+          </div>
+        </div>
+        <div class="selected-bar-actions">
+          <a class="btn green" href="#orcamento">Simular este modelo ↘</a>
+          <button class="btn outline" id="shareSelected" type="button">Copiar link ↗</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Simulador de Orçamento Completo -->
+    <section class="quote-section" id="orcamento">
+      <div class="wrap quote-layout">
+        <div class="quote-title">
+          <div class="eyebrow">Simulador interativo</div>
+          <h2>Vamos colocar<br>seu bloco na rua<span style="color:var(--pink)">?</span></h2>
+          <p>Ajuste quantidade, tipo de corte, tecido e entrega para ter uma estimativa precisa. O valor final pode ser confirmado e ajustado no WhatsApp.</p>
+        </div>
+
+        <div class="quote-card">
+          <!-- Quantidade Unitária com Stepper -->
+          <div class="quantity-row">
+            <label for="quantity">Quantidade de abadás</label>
+            <div class="stepper">
+              <button type="button" class="stepper-btn" id="btnMinus" aria-label="Diminuir uma peça">−</button>
+              <input type="number" id="quantity" class="stepper-input" min="10" max="500" step="1" value="10">
+              <button type="button" class="stepper-btn" id="btnPlus" aria-label="Aumentar uma peça">+</button>
+            </div>
+          </div>
+          
+          <input id="quantityRange" type="range" min="10" max="250" step="1" value="10" aria-label="Controle deslizante de quantidade">
+          <div class="range-labels"><span>Mínimo: 10 peças</span><span>Descontos progressivos a partir de 50 un</span></div>
+
+          <!-- Grade de Modelagem e Tecido -->
+          <div class="form-group-grid">
+            <div>
+              <label class="field-label" for="cutModel">Modelo do abadá</label>
+              <select id="cutModel" class="custom-select">
+                <option value="regata" data-cost="0">Regata Tradicional (Padrão)</option>
+                <option value="machao" data-cost="2.00">Machão (+ R$ 2,00 / un)</option>
+                <option value="manga" data-cost="4.50">Com Manga (+ R$ 4,50 / un)</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label" for="fabricType">Tipo de malha</label>
+              <select id="fabricType" class="custom-select">
+                <option value="helanquinha" data-cost="0">Helanquinha 100% poliéster</option>
+                <option value="dry" data-cost="3.00">Dry Fit Esportivo (+ R$ 3,00 / un)</option>
+                <option value="pp" data-cost="2.00">PP Premium Soft (+ R$ 2,00 / un)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Urgência -->
+          <div class="options-box">
+            <label class="checkbox-urgency">
+              <input type="checkbox" id="urgencyCheck">
+              <span>
+                <strong>Produção Express / Urgência (+15%)</strong>
+                <small>Prioridade máxima de corte, estamparia e costura para prazos curtos.</small>
+              </span>
+            </label>
+          </div>
+
+          <!-- Logística: Retirada ou Entrega -->
+          <div class="options-box">
+            <span class="field-label">Forma de recebimento</span>
+            <div class="radio-pill-group">
+              <label class="radio-label">
+                <input type="radio" name="shippingMethod" value="retirada" checked>
+                <span>Retirada (Grátis)</span>
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="shippingMethod" value="entrega">
+                <span>Entrega no local</span>
+              </label>
+            </div>
+
+            <!-- Campo dinâmico de endereço -->
+            <div class="delivery-address-wrap" id="deliveryAddressWrap">
+              <label class="field-label" for="deliveryAddress" style="margin-top:12px;">Endereço de entrega</label>
+              <textarea id="deliveryAddress" placeholder="Digite sua cidade, bairro e rua / CEP para cálculo do frete..."></textarea>
+              <span class="delivery-note">✦ Valor negociável no fechamento do pedido</span>
+            </div>
+          </div>
+
+          <!-- Resumo de Preços -->
+          <div class="price-summary">
+            <div class="price-box">
+              <span>Valor por peça</span>
+              <strong id="unitPrice">R$ 35,00</strong>
+            </div>
+            <div class="price-box total">
+              <span>Total estimado</span>
+              <strong id="totalPrice">R$ 350,00</strong>
+            </div>
+          </div>
+
+          <p class="quote-note">Estimativa prévia calculada com base na configuração selecionada. Valores finais e prazos confirmados no atendimento.</p>
+          <button class="btn green" id="requestQuote" type="button">Solicitar orçamento no WhatsApp ↗</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefícios -->
+    <section class="wrap benefits" aria-label="Vantagens">
+      <div class="benefit"><i>✦</i><strong>200 modelos</strong><span>Quatro coleções exclusivas.</span></div>
+      <div class="benefit"><i>↗</i><strong>Totalmente adaptável</strong><span>Troque cores, nomes e corte.</span></div>
+      <div class="benefit"><i>＋</i><strong>Preço flexível</strong><span>Mais peças, menor valor unitário.</span></div>
+      <div class="benefit"><i>CT</i><strong>CarnaTiller 2027</strong><span>Qualidade em cada detalhe.</span></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <div><strong style="color:var(--ink)">CARNA TILLER 2027</strong><br>É a gente que faz o Carnaval acontecer!</div>
+      <div>© 2027 Tiller Confecções · Todos os direitos reservados.</div>
+    </div>
+  </footer>
+  
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    /*
+      CONFIGURAÇÃO RÁPIDA:
+      1) Coloque as imagens dos modelos em:
+         /imagens/categoria-1/modelo-001.jpg ... modelo-050.jpg
+         /imagens/categoria-2/modelo-051.jpg ... modelo-100.jpg
+         /imagens/categoria-3/modelo-101.jpg ... modelo-150.jpg
+         /imagens/categoria-4/modelo-151.jpg ... modelo-200.jpg
+      2) Coloque a imagem sem fundo do topo em:
+         /imagens/hero-destaque.png
+      3) Altere o número de WhatsApp comercial.
+    */
+    const WHATSAPP = "5500000000000"; // Ex.: "5584999999999"
+    const PRECO_BASE = 35.00;
+    const PRICE_TIERS = [
+      { min: 100, price: 29.90 },
+      { min: 50, price: 32.90 },
+      { min: 10, price: 35.00 }
+    ];
+    const CATEGORIES = [
+      { id: 1, name: "Neon", start: 1, end: 50, folder: "categoria-1" },
+      { id: 2, name: "Abstrato", start: 51, end: 100, folder: "categoria-2" },
+      { id: 3, name: "Tropical", start: 101, end: 150, folder: "categoria-3" },
+      { id: 4, name: "Minimal", start: 151, end: 200, folder: "categoria-4" }
+    ];
+
+    // Elementos DOM
+    const track = document.getElementById("carouselTrack");
+    const tabs = [...document.querySelectorAll(".tab")];
+    const selectedLabel = document.getElementById("selectedModel");
+    const selectedThumbImg = document.getElementById("selectedThumbImg");
+    const selectedThumbFallback = document.getElementById("selectedThumbFallback");
+    const heroPng = document.getElementById("heroPng");
+    
+    // Inputs do simulador
+    const quantity = document.getElementById("quantity");
+    const quantityRange = document.getElementById("quantityRange");
+    const btnMinus = document.getElementById("btnMinus");
+    const btnPlus = document.getElementById("btnPlus");
+    const cutModel = document.getElementById("cutModel");
+    const fabricType = document.getElementById("fabricType");
+    const urgencyCheck = document.getElementById("urgencyCheck");
+    const shippingRadios = document.querySelectorAll('input[name="shippingMethod"]');
+    const deliveryAddressWrap = document.getElementById("deliveryAddressWrap");
+    const deliveryAddress = document.getElementById("deliveryAddress");
+    const unitPriceEl = document.getElementById("unitPrice");
+    const totalPriceEl = document.getElementById("totalPrice");
+    const toast = document.getElementById("toast");
+
+    let currentCategory = 1;
+    let selectedNumber = 1;
+    let toastTimer;
+
+    // Fallback gracioso se a imagem heroPng ainda não estiver na pasta
+    heroPng.addEventListener("error", () => {
+      heroPng.style.display = "none";
+      const glow = document.querySelector(".hero-media-glow");
+      if (glow) glow.style.display = "none";
+    });
+
+    const money = value => value.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+    const modelName = n => `Modelo ${String(n).padStart(3, "0")}`;
+    
+    function imagePath(category, n) {
+      return `imagens/${category.folder}/modelo-${String(n).padStart(3, "0")}.jpg`;
+    }
+    
+    function modelUrl(n) {
+      return `${location.origin}${location.pathname}#modelo-${String(n).padStart(3, "0")}`;
+    }
+    
+    function notify(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
+    // Renderização dos 200 modelos em um único fluxo contínuo
+    function renderContinuousCatalog() {
+      const fragment = document.createDocumentFragment();
+
+      CATEGORIES.forEach(category => {
+        for (let n = category.start; n <= category.end; n++) {
+          const card = document.createElement("article");
+          card.className = "model-card";
+          card.dataset.number = n;
+          card.dataset.category = category.id;
+          card.innerHTML = `
+            <div class="model-art">
+              <div class="placeholder-logo" aria-hidden="true">
+                <div class="crown">♛</div><strong>CARNA<br>TILLER</strong><small>2027</small><em>${category.name.toUpperCase()}</em>
+              </div>
+              <img src="${imagePath(category, n)}" alt="${modelName(n)} CarnaTiller" loading="lazy">
+            </div>
+            <div class="model-info">
+              <div class="model-info-top"><span class="model-number">CT · ${String(n).padStart(3,"0")}</span><span class="model-number">${category.name}</span></div>
+              <h3>${modelName(n)}</h3>
+              <div class="model-actions">
+                <button class="choose" type="button" data-select="${n}">Selecionar modelo</button>
+                <a class="view" href="#modelo-${String(n).padStart(3,"0")}" data-view="${n}">Link direto ↗</a>
+              </div>
+            </div>`;
+          
+          const img = card.querySelector("img");
+          img.addEventListener("error", () => { img.style.display = "none"; });
+          fragment.appendChild(card);
+        }
+      });
+
+      track.appendChild(fragment);
+
+      // Delegação de eventos de clique nos cards
+      track.addEventListener("click", (e) => {
+        const selectBtn = e.target.closest("[data-select]");
+        if (selectBtn) {
+          selectModel(Number(selectBtn.dataset.select), true, true);
+          return;
+        }
+
+        const viewLink = e.target.closest("[data-view]");
+        if (viewLink) {
+          e.preventDefault();
+          const num = Number(viewLink.dataset.view);
+          selectModel(num, true, true);
+          copyText(modelUrl(num), "Link direto copiado.");
+        }
+      });
+    }
+
+    function scrollToCard(n, smooth = true) {
+      const card = track.querySelector(`[data-number="${n}"]`);
+      if (!card) return;
+      track.scrollTo({ left: card.offsetLeft - (track.clientWidth - card.clientWidth) / 2, behavior: smooth ? "smooth" : "auto" });
+      updateActiveCard();
+    }
+
+    function updateActiveTab(categoryId) {
+      if (currentCategory === categoryId) return;
+      currentCategory = categoryId;
+      tabs.forEach(tab => {
+        const isActive = Number(tab.dataset.category) === categoryId;
+        tab.classList.toggle("active", isActive);
+        tab.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+    }
+
+    // Detecção do modelo central e atualização contínua de abas
+    function updateActiveCard() {
+      const cards = [...track.querySelectorAll(".model-card")];
+      if (!cards.length) return;
+      const center = track.getBoundingClientRect().left + track.clientWidth / 2;
+      let closest = cards[0], distance = Infinity;
+      
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const d = Math.abs(rect.left + rect.width / 2 - center);
+        if (d < distance) { distance = d; closest = card; }
+      });
+
+      cards.forEach(card => card.classList.toggle("is-active", card === closest));
+
+      if (closest) {
+        const num = Number(closest.dataset.number);
+        const cardCatId = Number(closest.dataset.category);
+        updateActiveTab(cardCatId);
+      }
+    }
+
+    // Seleção com atualização da MINIATURA
+    function selectModel(n, scroll = true, updateHash = true) {
+      selectedNumber = n;
+      const category = CATEGORIES.find(c => n >= c.start && n <= c.end);
+      if (category) {
+        selectedLabel.textContent = `${modelName(n)} · ${category.name}`;
+        updateActiveTab(category.id);
+        
+        // Atualiza a miniatura
+        const imgPath = imagePath(category, n);
+        selectedThumbImg.src = imgPath;
+        selectedThumbImg.onload = () => {
+          selectedThumbImg.style.display = "block";
+          selectedThumbFallback.style.display = "none";
+        };
+        selectedThumbImg.onerror = () => {
+          selectedThumbImg.style.display = "none";
+          selectedThumbFallback.style.display = "grid";
+          selectedThumbFallback.textContent = `CT${String(n).padStart(3, "0").slice(-2)}`;
+        };
+      }
+      if (scroll) scrollToCard(n);
+      if (updateHash) {
+        history.replaceState(null, "", `#modelo-${String(n).padStart(3,"0")}`);
+      }
+    }
+
+    async function copyText(text, successMessage) {
+      try {
+        await navigator.clipboard.writeText(text);
+        notify(successMessage);
+      } catch (_) {
+        const temp = document.createElement("textarea");
+        temp.value = text; temp.style.position = "fixed"; temp.style.opacity = "0";
+        document.body.appendChild(temp); temp.select();
+        try { document.execCommand("copy"); notify(successMessage); }
+        catch (e) { notify("Link do modelo: " + text); }
+        temp.remove();
+      }
+    }
+
+    // Cálculo do Simulador
+    function priceFor(qty) {
+      const tier = PRICE_TIERS.find(t => qty >= t.min);
+      return tier ? tier.price : PRECO_BASE;
+    }
+
+    function calculateFullQuote() {
+      const qty = Math.max(10, Number(quantity.value) || 10);
+      const baseUnit = priceFor(qty);
+      
+      const cutAdditional = parseFloat(cutModel.selectedOptions[0]?.dataset.cost || 0);
+      const fabricAdditional = parseFloat(fabricType.selectedOptions[0]?.dataset.cost || 0);
+      
+      let unit = baseUnit + cutAdditional + fabricAdditional;
+      let total = unit * qty;
+
+      const isUrgent = urgencyCheck.checked;
+      if (isUrgent) {
+        total = total * 1.15;
+        unit = total / qty;
+      }
+
+      return { qty, unit, total, isUrgent };
+    }
+
+    function updateQuote() {
+      const { qty, unit, total } = calculateFullQuote();
+      unitPriceEl.textContent = money(unit);
+      totalPriceEl.textContent = money(total);
+    }
+
+    // Ajuste de Quantidade Unitária
+    function setQuantity(val) {
+      const clamped = Math.max(10, Math.min(500, Number(val)));
+      quantity.value = clamped;
+      quantityRange.value = clamped;
+      updateQuote();
+    }
+
+    btnMinus.addEventListener("click", () => setQuantity(Number(quantity.value) - 1));
+    btnPlus.addEventListener("click", () => setQuantity(Number(quantity.value) + 1));
+    
+    quantity.addEventListener("input", () => {
+      setQuantity(quantity.value);
+    });
+
+    quantityRange.addEventListener("input", () => {
+      quantity.value = quantityRange.value;
+      updateQuote();
+    });
+
+    cutModel.addEventListener("change", updateQuote);
+    fabricType.addEventListener("change", updateQuote);
+    urgencyCheck.addEventListener("change", updateQuote);
+
+    // Opções de Entrega / Retirada
+    shippingRadios.forEach(radio => {
+      radio.addEventListener("change", (e) => {
+        if (e.target.value === "entrega") {
+          deliveryAddressWrap.classList.add("active");
+          deliveryAddress.focus();
+        } else {
+          deliveryAddressWrap.classList.remove("active");
+        }
+      });
+    });
+
+    // Clique nas abas leva suavemente para o início da categoria
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        const catId = Number(tab.dataset.category);
+        const category = CATEGORIES.find(c => c.id === catId);
+        if (category) {
+          selectModel(category.start, true, true);
+        }
+      });
+    });
+    
+    // Listener de scroll contínuo
+    track.addEventListener("scroll", () => requestAnimationFrame(updateActiveCard), { passive: true });
+    
+    // Botões de navegação anterior/próximo contínuos (passam de uma categoria para outra)
+    document.getElementById("prevModel").addEventListener("click", () => {
+      const prev = Math.max(1, selectedNumber - 1);
+      selectModel(prev, true, true);
+    });
+
+    document.getElementById("nextModel").addEventListener("click", () => {
+      const next = Math.min(200, selectedNumber + 1);
+      selectModel(next, true, true);
+    });
+
+    // Compartilhar modelo
+    document.getElementById("shareSelected").addEventListener("click", () => {
+      copyText(modelUrl(selectedNumber), "Link direto do modelo copiado.");
+    });
+
+    // Envio para WhatsApp detalhado
+    document.getElementById("requestQuote").addEventListener("click", () => {
+      const { qty, unit, total, isUrgent } = calculateFullQuote();
+      const category = CATEGORIES.find(c => selectedNumber >= c.start && selectedNumber <= c.end);
+      const selectedShipping = document.querySelector('input[name="shippingMethod"]:checked').value;
+      
+      const cutName = cutModel.selectedOptions[0].text;
+      const fabricName = fabricType.selectedOptions[0].text;
+      const shippingText = selectedShipping === "entrega" 
+        ? `Entrega no local (Endereço: ${deliveryAddress.value.trim() || 'A informar'} - valor negociável)` 
+        : `Retirada no local (Grátis)`;
+      
+      const messageLines = [
+        "Olá! Quero solicitar um orçamento CarnaTiller 2027 com as seguintes preferências:",
+        `• Modelo: ${modelName(selectedNumber)} (${modelUrl(selectedNumber)})`,
+        `• Categoria: ${category.name}`,
+        `• Quantidade: ${qty} peças`,
+        `• Modelo do abadá: ${cutName}`,
+        `• Tipo de malha: ${fabricName}`,
+        `• Prazo / Urgência: ${isUrgent ? 'Sim, prazo com urgência (+15%)' : 'Prazo normal'}`,
+        `• Logística: ${shippingText}`,
+        `• Estimativa do simulador: ${money(total)} (média de ${money(unit)} por peça)`,
+        "",
+        "Por favor, confirmem a disponibilidade, valores e prazo de entrega."
+      ];
+
+      if (!WHATSAPP || WHATSAPP === "5500000000000") {
+        notify("Configure o número de WhatsApp comercial no arquivo index.html.");
+        return;
+      }
+      
+      const waUrl = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(messageLines.join("\n"))}`;
+      window.open(waUrl, "_blank", "noopener,noreferrer");
+    });
+
+    // Inicialização da URL e Hash
+    function initApp() {
+      renderContinuousCatalog();
+      updateQuote();
+
+      const hash = location.hash;
+      const match = hash.match(/modelo-(\d{3})/);
+      
+      if (match) {
+        const n = Math.max(1, Math.min(200, Number(match[1])));
+        selectModel(n, false, false);
+        requestAnimationFrame(() => scrollToCard(n, false));
+      } else {
+        selectModel(1, false, false);
+        if (hash) {
+          const target = document.querySelector(hash);
+          if (target) setTimeout(() => target.scrollIntoView(), 120);
+        }
+      }
+    }
+
+    initApp();
+  </script>
+</body>
+</html>
