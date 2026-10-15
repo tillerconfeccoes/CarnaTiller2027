@@ -40,7 +40,7 @@
     .brand small { display:block; margin-top:4px; font-size:10px; letter-spacing:.18em; font-weight:800; }
     .pill { border:1px solid var(--ink); border-radius:999px; padding:9px 13px; font-size:12px; font-weight:850; text-decoration:none; white-space:nowrap; }
 
-    /* Hero com layout de 2 colunas para imagem PNG sem fundo */
+    /* Hero */
     .hero { padding:36px 0 28px; }
     .hero-grid {
       display: grid;
@@ -124,12 +124,22 @@
       scroll-snap-type:x mandatory; scrollbar-width:none; overscroll-behavior-x:contain;
     }
     .carousel-track::-webkit-scrollbar { display:none; }
+    
+    /* Estado inicial: neutro e sem destaque artificial antes da rolagem */
     .model-card {
       flex:0 0 min(74vw, 310px); scroll-snap-align:center; position:relative; border:1px solid var(--line);
-      border-radius:24px; overflow:hidden; background:#f8f8f8; transform:scale(.91); opacity:.72;
-      transition:transform .25s ease, opacity .25s ease, box-shadow .25s ease; box-shadow:none;
+      border-radius:24px; overflow:hidden; background:#f8f8f8; transform:scale(1); opacity:1;
+      transition:transform .25s ease, opacity .25s ease, box-shadow .25s ease, border-color .25s ease; box-shadow:none;
     }
-    .model-card.is-active { transform:scale(1); opacity:1; box-shadow:var(--shadow); border-color:#d6d6d6; }
+
+    /* O destaque dinâmico só age após o usuário interagir / rolar */
+    .carousel-track.has-interacted .model-card {
+      transform:scale(.92); opacity:.74;
+    }
+    .carousel-track.has-interacted .model-card.is-active {
+      transform:scale(1); opacity:1; box-shadow:var(--shadow); border-color:#d6d6d6;
+    }
+
     .model-art { aspect-ratio: .78; position:relative; overflow:hidden; display:grid; place-items:center; background:
       radial-gradient(circle at 12% 12%, var(--pink) 0 3px, transparent 4px),
       radial-gradient(circle at 83% 22%, var(--mustard) 0 5px, transparent 6px),
@@ -317,7 +327,6 @@
 
         <div class="hero-media">
           <div class="hero-media-glow"></div>
-          <!-- Insira sua imagem PNG transparente em imagens/hero-destaque.png -->
           <img src="imagens/hero-destaque.png" alt="Abadá CarnaTiller 2027 em destaque" class="hero-png" id="heroPng">
         </div>
       </div>
@@ -348,7 +357,7 @@
         <button class="carousel-nav-btn next" id="nextModel" type="button" aria-label="Próximo modelo">→</button>
       </div>
 
-      <div class="carousel-hint">← Deslize livremente por todas as coleções → <b>· O cartão central fica em destaque</b></div>
+      <div class="carousel-hint">← Deslize para navegar → <b>· O cartão central fica em destaque ao rolar</b></div>
       
       <!-- Barra do Modelo Selecionado com MINIATURA -->
       <div class="selected-bar">
@@ -482,18 +491,8 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
-    /*
-      CONFIGURAÇÃO RÁPIDA:
-      1) Coloque as imagens dos modelos em:
-         /imagens/categoria-1/modelo-001.jpg ... modelo-050.jpg
-         /imagens/categoria-2/modelo-051.jpg ... modelo-100.jpg
-         /imagens/categoria-3/modelo-101.jpg ... modelo-150.jpg
-         /imagens/categoria-4/modelo-151.jpg ... modelo-200.jpg
-      2) Coloque a imagem sem fundo do topo em:
-         /imagens/hero-destaque.png
-      3) Altere o número de WhatsApp comercial.
-    */
-    const WHATSAPP = "5500000000000"; // Ex.: "5584999999999"
+    // WhatsApp configurado para +55 84 98706-5678
+    const WHATSAPP = "5584987065678";
     const PRECO_BASE = 35.00;
     const PRICE_TIERS = [
       { min: 100, price: 29.90 },
@@ -533,8 +532,8 @@
     let currentCategory = 1;
     let selectedNumber = 1;
     let toastTimer;
+    let hasInteractedWithCarousel = false;
 
-    // Fallback gracioso se a imagem heroPng ainda não estiver na pasta
     heroPng.addEventListener("error", () => {
       heroPng.style.display = "none";
       const glow = document.querySelector(".hero-media-glow");
@@ -559,7 +558,14 @@
       toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
     }
 
-    // Renderização dos 200 modelos em um único fluxo contínuo
+    function activateCarouselInteraction() {
+      if (!hasInteractedWithCarousel) {
+        hasInteractedWithCarousel = true;
+        track.classList.add("has-interacted");
+      }
+    }
+
+    // Renderização contínua dos modelos
     function renderContinuousCatalog() {
       const fragment = document.createDocumentFragment();
 
@@ -593,10 +599,10 @@
 
       track.appendChild(fragment);
 
-      // Delegação de eventos de clique nos cards
       track.addEventListener("click", (e) => {
         const selectBtn = e.target.closest("[data-select]");
         if (selectBtn) {
+          activateCarouselInteraction();
           selectModel(Number(selectBtn.dataset.select), true, true);
           return;
         }
@@ -604,6 +610,7 @@
         const viewLink = e.target.closest("[data-view]");
         if (viewLink) {
           e.preventDefault();
+          activateCarouselInteraction();
           const num = Number(viewLink.dataset.view);
           selectModel(num, true, true);
           copyText(modelUrl(num), "Link direto copiado.");
@@ -628,8 +635,9 @@
       });
     }
 
-    // Detecção do modelo central e atualização contínua de abas
     function updateActiveCard() {
+      if (!hasInteractedWithCarousel) return;
+
       const cards = [...track.querySelectorAll(".model-card")];
       if (!cards.length) return;
       const center = track.getBoundingClientRect().left + track.clientWidth / 2;
@@ -644,13 +652,12 @@
       cards.forEach(card => card.classList.toggle("is-active", card === closest));
 
       if (closest) {
-        const num = Number(closest.dataset.number);
         const cardCatId = Number(closest.dataset.category);
         updateActiveTab(cardCatId);
       }
     }
 
-    // Seleção com atualização da MINIATURA
+    // Seleção de Modelo
     function selectModel(n, scroll = true, updateHash = true) {
       selectedNumber = n;
       const category = CATEGORIES.find(c => n >= c.start && n <= c.end);
@@ -671,7 +678,10 @@
           selectedThumbFallback.textContent = `CT${String(n).padStart(3, "0").slice(-2)}`;
         };
       }
-      if (scroll) scrollToCard(n);
+      if (scroll) {
+        activateCarouselInteraction();
+        scrollToCard(n);
+      }
       if (updateHash) {
         history.replaceState(null, "", `#modelo-${String(n).padStart(3,"0")}`);
       }
@@ -722,7 +732,7 @@
       totalPriceEl.textContent = money(total);
     }
 
-    // Ajuste de Quantidade Unitária
+    // Quantidade unitária
     function setQuantity(val) {
       const clamped = Math.max(10, Math.min(500, Number(val)));
       quantity.value = clamped;
@@ -733,10 +743,7 @@
     btnMinus.addEventListener("click", () => setQuantity(Number(quantity.value) - 1));
     btnPlus.addEventListener("click", () => setQuantity(Number(quantity.value) + 1));
     
-    quantity.addEventListener("input", () => {
-      setQuantity(quantity.value);
-    });
-
+    quantity.addEventListener("input", () => setQuantity(quantity.value));
     quantityRange.addEventListener("input", () => {
       quantity.value = quantityRange.value;
       updateQuote();
@@ -758,9 +765,10 @@
       });
     });
 
-    // Clique nas abas leva suavemente para o início da categoria
+    // Abas
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
+        activateCarouselInteraction();
         const catId = Number(tab.dataset.category);
         const category = CATEGORIES.find(c => c.id === catId);
         if (category) {
@@ -769,16 +777,21 @@
       });
     });
     
-    // Listener de scroll contínuo
-    track.addEventListener("scroll", () => requestAnimationFrame(updateActiveCard), { passive: true });
+    // Rolagem
+    track.addEventListener("scroll", () => {
+      activateCarouselInteraction();
+      requestAnimationFrame(updateActiveCard);
+    }, { passive: true });
     
-    // Botões de navegação anterior/próximo contínuos (passam de uma categoria para outra)
+    // Setas laterais
     document.getElementById("prevModel").addEventListener("click", () => {
+      activateCarouselInteraction();
       const prev = Math.max(1, selectedNumber - 1);
       selectModel(prev, true, true);
     });
 
     document.getElementById("nextModel").addEventListener("click", () => {
+      activateCarouselInteraction();
       const next = Math.min(200, selectedNumber + 1);
       selectModel(next, true, true);
     });
@@ -814,16 +827,11 @@
         "Por favor, confirmem a disponibilidade, valores e prazo de entrega."
       ];
 
-      if (!WHATSAPP || WHATSAPP === "5500000000000") {
-        notify("Configure o número de WhatsApp comercial no arquivo index.html.");
-        return;
-      }
-      
       const waUrl = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(messageLines.join("\n"))}`;
       window.open(waUrl, "_blank", "noopener,noreferrer");
     });
 
-    // Inicialização da URL e Hash
+    // Inicialização da aplicação
     function initApp() {
       renderContinuousCatalog();
       updateQuote();
@@ -833,6 +841,7 @@
       
       if (match) {
         const n = Math.max(1, Math.min(200, Number(match[1])));
+        activateCarouselInteraction();
         selectModel(n, false, false);
         requestAnimationFrame(() => scrollToCard(n, false));
       } else {
