@@ -96,7 +96,7 @@
     .section-head h2 { font-size:clamp(28px, 6vw, 42px); line-height:1; letter-spacing:-.06em; margin:8px 0 6px; }
     .section-head p { color:var(--muted); font-size:13px; margin:0 auto; max-width:440px; line-height:1.45; }
     
-    /* Categorias: Ajuste da rolagem para o mobile com a 1ª centralizada */
+    /* Categorias com início centralizado */
     .category-nav-wrapper {
       width: 100%;
       margin: 10px 0 16px;
@@ -108,7 +108,6 @@
       align-items: center;
       gap: 10px;
       overflow-x: auto;
-      /* O padding lateral faz com que o primeiro item fique no centro da tela ao iniciar no mobile */
       padding: 6px calc((100% - 150px) / 2) 14px;
       scroll-snap-type: x mandatory;
       scrollbar-width: none;
@@ -146,14 +145,12 @@
     }
     .carousel-track::-webkit-scrollbar { display:none; }
     
-    /* Estado inicial: neutro e sem destaque artificial antes da rolagem */
     .model-card {
       flex:0 0 min(74vw, 310px); scroll-snap-align:center; position:relative; border:1px solid var(--line);
       border-radius:24px; overflow:hidden; background:#f8f8f8; transform:scale(1); opacity:1;
       transition:transform .25s ease, opacity .25s ease, box-shadow .25s ease, border-color .25s ease; box-shadow:none;
     }
 
-    /* O destaque dinâmico só age após o usuário interagir / rolar */
     .carousel-track.has-interacted .model-card {
       transform:scale(.92); opacity:.74;
     }
@@ -161,20 +158,36 @@
       transform:scale(1); opacity:1; box-shadow:var(--shadow); border-color:#d6d6d6;
     }
 
-    .model-art { aspect-ratio: .78; position:relative; overflow:hidden; display:grid; place-items:center; background:
-      radial-gradient(circle at 12% 12%, var(--pink) 0 3px, transparent 4px),
-      radial-gradient(circle at 83% 22%, var(--mustard) 0 5px, transparent 6px),
-      radial-gradient(circle at 20% 82%, var(--green) 0 5px, transparent 6px),
-      linear-gradient(145deg,#fff 0%,#fdfdfd 58%,#f5f5f5 100%);
+    /* Arte do Abadá com cursor de zoom e badge */
+    .model-art {
+      aspect-ratio: .78; position:relative; overflow:hidden; display:grid; place-items:center;
+      cursor: zoom-in;
+      background:
+        radial-gradient(circle at 12% 12%, var(--pink) 0 3px, transparent 4px),
+        radial-gradient(circle at 83% 22%, var(--mustard) 0 5px, transparent 6px),
+        radial-gradient(circle at 20% 82%, var(--green) 0 5px, transparent 6px),
+        linear-gradient(145deg,#fff 0%,#fdfdfd 58%,#f5f5f5 100%);
     }
     .model-art:before, .model-art:after { content:""; position:absolute; border-radius:80% 30% 70% 35%; width:65%; height:12%; background:var(--green); top:12%; left:-10%; transform:rotate(-34deg); }
     .model-art:after { width:53%; height:10%; top:auto; bottom:14%; left:auto; right:-8%; background:var(--pink); transform:rotate(-35deg); }
     .model-art img { width:100%; height:100%; object-fit:cover; display:block; position:absolute; inset:0; z-index:1; }
+    
+    /* Indicador visual de toque para ampliar */
+    .zoom-hint {
+      position: absolute; bottom: 10px; right: 10px; z-index: 3;
+      background: rgba(17, 17, 17, 0.7); backdrop-filter: blur(4px);
+      color: white; font-size: 11px; font-weight: 800; padding: 4px 8px;
+      border-radius: 999px; display: flex; align-items: center; gap: 4px;
+      opacity: 0.85; transition: opacity .2s; pointer-events: none;
+    }
+    .model-art:hover .zoom-hint { opacity: 1; }
+
     .placeholder-logo { position:relative; z-index:0; text-align:center; transform:rotate(-5deg); padding:18px; }
     .placeholder-logo .crown { font-size:29px; line-height:1; color:var(--mustard); font-weight:900; }
     .placeholder-logo strong { display:block; font-size:clamp(31px,8vw,48px); line-height:.83; letter-spacing:-.09em; font-weight:1000; }
     .placeholder-logo small { display:block; font-weight:950; font-size:22px; letter-spacing:-.05em; margin-top:9px; }
     .placeholder-logo em { display:inline-block; font-style:normal; font-size:10px; letter-spacing:.2em; font-weight:900; margin-top:12px; }
+    
     .model-info { padding:14px; background:white; }
     .model-info-top { display:flex; align-items:center; justify-content:space-between; gap:8px; }
     .model-number { font-size:11px; font-weight:950; letter-spacing:.12em; color:#777; }
@@ -195,7 +208,7 @@
     .carousel-hint { text-align:center; color:#777; font-size:11px; margin-top:-4px; }
     .carousel-hint b { color:var(--ink); }
 
-    /* Barra do Modelo Selecionado com MINIATURA */
+    /* Barra do Modelo Selecionado com MINIATURA (também clicável) */
     .selected-bar {
       display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px;
       border:1px solid var(--line); border-radius:20px; padding:12px 16px; margin-top:16px; background:white;
@@ -204,6 +217,7 @@
     .selected-thumb-wrap {
       width:52px; height:52px; border-radius:14px; overflow:hidden; border:1px solid var(--line);
       background:#f4f4f4; position:relative; flex-shrink:0; display:grid; place-items:center;
+      cursor: zoom-in;
     }
     .selected-thumb-wrap img { width:100%; height:100%; object-fit:cover; display:none; position:relative; z-index:2; }
     .selected-thumb-fallback {
@@ -214,6 +228,64 @@
     .selected-info strong { display:block; margin-top:3px; font-size:15px; letter-spacing:-.02em; }
     .selected-bar-actions { display:flex; gap:8px; align-items:center; }
     .selected-bar-actions .btn { min-height:40px; padding:9px 14px; font-size:12px; }
+
+    /* Modal / Lightbox de Tela Cheia */
+    .image-modal {
+      position: fixed; inset: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px; opacity: 0; pointer-events: none;
+      transition: opacity .25s ease;
+    }
+    .image-modal.open {
+      opacity: 1; pointer-events: auto;
+    }
+    .modal-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(17, 17, 17, 0.88);
+      backdrop-filter: blur(8px);
+    }
+    .modal-box {
+      position: relative; z-index: 2;
+      max-width: min(92vw, 460px);
+      max-height: 90vh;
+      display: flex; flex-direction: column;
+      background: #181818; border: 1px solid #333;
+      border-radius: 24px; overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,.6);
+      transform: scale(.92);
+      transition: transform .25s ease;
+    }
+    .image-modal.open .modal-box {
+      transform: scale(1);
+    }
+    .modal-close {
+      position: absolute; top: 12px; right: 12px;
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 0; background: rgba(0,0,0,0.65); color: white;
+      font-size: 17px; font-weight: bold; cursor: pointer;
+      display: grid; place-items: center; z-index: 10;
+      transition: background .2s, transform .2s;
+    }
+    .modal-close:hover {
+      background: var(--pink); transform: rotate(90deg);
+    }
+    .modal-image-wrap {
+      width: 100%; max-height: 68vh;
+      display: flex; align-items: center; justify-content: center;
+      background: #111; overflow: hidden;
+    }
+    .modal-image-wrap img {
+      max-width: 100%; max-height: 68vh;
+      object-fit: contain; display: block;
+    }
+    .modal-caption {
+      width: 100%; padding: 14px 18px;
+      background: #1a1a1a; border-top: 1px solid #282828;
+      color: white; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .modal-caption strong { display: block; font-size: 15px; }
+    .modal-caption span { display: block; font-size: 11px; color: var(--green); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; margin-top: 2px; }
+    .modal-caption .btn { min-height: 38px; padding: 8px 16px; font-size: 12px; }
 
     /* Simulador de Orçamento Expandido */
     .quote-section { background:#f7f7f7; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:44px 0; }
@@ -303,7 +375,7 @@
     .toast { position:fixed; left:50%; bottom:18px; transform:translate(-50%,20px); opacity:0; pointer-events:none; background:#111; color:white; padding:12px 16px; border-radius:999px; font-size:12px; font-weight:800; transition:.2s; z-index:10; width:max-content; max-width:calc(100% - 30px); }
     .toast.show { opacity:1; transform:translate(-50%,0); }
 
-    /* Adaptações para telas médias e grandes (Desktop) */
+    /* Adaptações para telas médias e grandes */
     @media (min-width:760px) {
       .category-tabs {
         justify-content: center;
@@ -338,7 +410,7 @@
   </header>
 
   <main>
-    <!-- Hero com Imagem PNG sem fundo ao lado direito -->
+    <!-- Hero -->
     <section class="wrap hero">
       <div class="hero-grid">
         <div class="hero-copy">
@@ -362,12 +434,12 @@
       </div>
     </section>
 
-    <!-- Catálogo de Modelos (Rolagem Contínua e Categorias com início centralizado) -->
+    <!-- Catálogo de Modelos -->
     <section class="wrap section" id="modelos">
       <div class="section-head">
         <div class="eyebrow" style="margin-bottom:6px;">Escolha seu visual</div>
         <h2>Modelos prontos<span style="color:var(--pink)">.</span></h2>
-        <p>Deslize continuamente por todos os 200 modelos ou clique nas categorias abaixo para ir direto.</p>
+        <p>Toque na foto para ampliar em tela cheia ou deslize para ver todos os modelos.</p>
       </div>
       
       <!-- Categorias -->
@@ -387,12 +459,12 @@
         <button class="carousel-nav-btn next" id="nextModel" type="button" aria-label="Próximo modelo">→</button>
       </div>
 
-      <div class="carousel-hint">← Deslize para navegar → <b>· O cartão central fica em destaque ao rolar</b></div>
+      <div class="carousel-hint">← Deslize para navegar · <b>Toque na estampa para abrir em tela cheia</b> →</div>
       
       <!-- Barra do Modelo Selecionado com MINIATURA -->
       <div class="selected-bar">
         <div class="selected-model-preview">
-          <div class="selected-thumb-wrap" id="selectedThumb">
+          <div class="selected-thumb-wrap" id="selectedThumb" title="Clique para ampliar esta foto">
             <span class="selected-thumb-fallback" id="selectedThumbFallback">CT</span>
             <img id="selectedThumbImg" alt="Miniatura do modelo selecionado">
           </div>
@@ -407,6 +479,24 @@
         </div>
       </div>
     </section>
+
+    <!-- Modal de Tela Cheia (Lightbox) -->
+    <div id="imageModal" class="image-modal" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="modal-backdrop" id="modalBackdrop"></div>
+      <div class="modal-box">
+        <button type="button" class="modal-close" id="modalClose" aria-label="Fechar visualização">✕</button>
+        <div class="modal-image-wrap">
+          <img id="modalImg" src="" alt="Visualização em tela cheia">
+        </div>
+        <div class="modal-caption">
+          <div>
+            <strong id="modalTitle">Modelo 001</strong>
+            <span id="modalCategory">Neon</span>
+          </div>
+          <button class="btn green" id="modalSelectBtn" type="button">Escolher este modelo</button>
+        </div>
+      </div>
+    </div>
 
     <!-- Simulador de Orçamento Completo -->
     <section class="quote-section" id="orcamento">
@@ -541,9 +631,20 @@
     const categoryTabs = document.getElementById("categoryTabs");
     const tabs = [...document.querySelectorAll(".tab")];
     const selectedLabel = document.getElementById("selectedModel");
+    const selectedThumbWrap = document.getElementById("selectedThumb");
     const selectedThumbImg = document.getElementById("selectedThumbImg");
     const selectedThumbFallback = document.getElementById("selectedThumbFallback");
     const heroPng = document.getElementById("heroPng");
+
+    // Elementos do Modal / Lightbox
+    const imageModal = document.getElementById("imageModal");
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const modalClose = document.getElementById("modalClose");
+    const modalImg = document.getElementById("modalImg");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalCategory = document.getElementById("modalCategory");
+    const modalSelectBtn = document.getElementById("modalSelectBtn");
+    let currentModalNumber = 1;
     
     // Inputs do simulador
     const quantity = document.getElementById("quantity");
@@ -596,6 +697,50 @@
       }
     }
 
+    // Funções do Modal de Tela Cheia
+    function openImageModal(num) {
+      const category = CATEGORIES.find(c => num >= c.start && num <= c.end);
+      if (!category) return;
+      
+      currentModalNumber = num;
+      modalImg.src = imagePath(category, num);
+      modalTitle.textContent = modelName(num);
+      modalCategory.textContent = category.name;
+      
+      imageModal.classList.add("open");
+      imageModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden"; // Trava a rolagem de fundo
+    }
+
+    function closeImageModal() {
+      imageModal.classList.remove("open");
+      imageModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      modalImg.src = "";
+    }
+
+    modalClose.addEventListener("click", closeImageModal);
+    modalBackdrop.addEventListener("click", closeImageModal);
+    
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && imageModal.classList.contains("open")) {
+        closeImageModal();
+      }
+    });
+
+    modalSelectBtn.addEventListener("click", () => {
+      if (currentModalNumber) {
+        selectModel(currentModalNumber, true, true);
+        closeImageModal();
+        notify(`${modelName(currentModalNumber)} selecionado!`);
+      }
+    });
+
+    // Clique na miniatura também abre em tela cheia
+    selectedThumbWrap.addEventListener("click", () => {
+      openImageModal(selectedNumber);
+    });
+
     // Renderização dos modelos
     function renderContinuousCatalog() {
       const fragment = document.createDocumentFragment();
@@ -607,7 +752,8 @@
           card.dataset.number = n;
           card.dataset.category = category.id;
           card.innerHTML = `
-            <div class="model-art">
+            <div class="model-art" data-zoom="${n}" title="Toque para ampliar em tela cheia">
+              <div class="zoom-hint">🔍 Ampliar</div>
               <div class="placeholder-logo" aria-hidden="true">
                 <div class="crown">♛</div><strong>CARNA<br>TILLER</strong><small>2027</small><em>${category.name.toUpperCase()}</em>
               </div>
@@ -623,14 +769,28 @@
             </div>`;
           
           const img = card.querySelector("img");
-          img.addEventListener("error", () => { img.style.display = "none"; });
+          img.addEventListener("error", () => { 
+            img.style.display = "none"; 
+            const hint = card.querySelector(".zoom-hint");
+            if (hint) hint.style.display = "none";
+          });
           fragment.appendChild(card);
         }
       });
 
       track.appendChild(fragment);
 
+      // Delegação de cliques nos cards
       track.addEventListener("click", (e) => {
+        // Clique na imagem para abrir tela cheia
+        const zoomEl = e.target.closest("[data-zoom]");
+        if (zoomEl) {
+          const num = Number(zoomEl.dataset.zoom);
+          openImageModal(num);
+          return;
+        }
+
+        // Botão Selecionar
         const selectBtn = e.target.closest("[data-select]");
         if (selectBtn) {
           activateCarouselInteraction();
@@ -638,6 +798,7 @@
           return;
         }
 
+        // Link Direto
         const viewLink = e.target.closest("[data-view]");
         if (viewLink) {
           e.preventDefault();
@@ -656,7 +817,6 @@
       updateActiveCard();
     }
 
-    // Centraliza a aba ativa no scroll da barra de categorias
     function centerTab(categoryId, smooth = true) {
       if (!categoryTabs) return;
       const activeTab = tabs.find(t => Number(t.dataset.category) === categoryId);
@@ -896,7 +1056,6 @@
         }
       }
 
-      // Garante que a 1ª categoria comece centralizada no mobile
       requestAnimationFrame(() => centerTab(1, false));
     }
 
