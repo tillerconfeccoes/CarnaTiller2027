@@ -38,6 +38,10 @@
     .brand-mark { width:35px; height:35px; display:grid; place-items:center; background:var(--green); border-radius:50% 42% 48% 38%; transform:rotate(-8deg); font-weight:1000; }
     .brand span:last-child { font-size:18px; }
     .brand small { display:block; margin-top:4px; font-size:10px; letter-spacing:.18em; font-weight:800; }
+    .topbar-actions { display:flex; align-items:center; gap:12px; }
+    .topbar-link { font-size:12px; font-weight:800; color:var(--muted); text-decoration:none; transition:color .2s; }
+    .topbar-link:hover { color:var(--ink); }
+    @media (max-width: 640px) { .topbar-link { display: none; } }
     .pill { border:1px solid var(--ink); border-radius:999px; padding:9px 13px; font-size:12px; font-weight:850; text-decoration:none; white-space:nowrap; }
 
     /* Hero com imagem posicionada no topo (acima do texto) */
@@ -189,8 +193,9 @@
     .model-info h3 { margin:5px 0 12px; font-size:17px; letter-spacing:-.04em; }
     .model-actions { display:flex; gap:8px; }
     .model-actions button, .model-actions a { flex:1; display:flex; justify-content:center; align-items:center; min-height:39px; border-radius:12px; border:1px solid var(--line); text-decoration:none; font-size:12px; font-weight:850; background:white; color:var(--ink); cursor:pointer; }
-    .model-actions .choose { background:var(--green); border-color:var(--green); }
-    .model-actions .view { background:white; }
+    .model-actions .choose { background:var(--ink); color:white; border-color:var(--ink); }
+    .model-actions .whatsapp-direct { background:var(--green); color:var(--ink); border-color:var(--green); }
+    .model-actions .whatsapp-direct:hover { filter: brightness(1.05); }
 
     .carousel-nav-btn {
       position: absolute; top: 46%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%;
@@ -358,6 +363,436 @@
     .quote-note { font-size:11px; color:#777; line-height:1.5; margin:14px 0 17px; }
     .quote-card .btn { width:100%; }
 
+    /* Informações 01: Perks no Hero */
+    .hero-perks-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 26px;
+    }
+    @media (min-width: 600px) {
+      .hero-perks-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 900px) {
+      .hero-perks-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .perk-card {
+      position: relative;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 4px 18px rgba(0,0,0,.03);
+      transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    }
+    .perk-card:hover {
+      transform: translateY(-2px);
+      border-color: #d2d2d2;
+      box-shadow: 0 10px 24px rgba(0,0,0,.06);
+    }
+    .perk-card.perk-neon {
+      background: linear-gradient(135deg, #ffffff 0%, #f6fff2 100%);
+      border-color: rgba(57,255,20,.4);
+    }
+    .perk-badge {
+      position: absolute;
+      top: -8px;
+      right: 14px;
+      background: var(--green);
+      color: var(--ink);
+      font-size: 9px;
+      font-weight: 1000;
+      letter-spacing: .08em;
+      padding: 2px 7px;
+      border-radius: 999px;
+    }
+    .perk-card.perk-seal {
+      background: linear-gradient(135deg, #ffffff 0%, #fff7fb 100%);
+      border-color: rgba(255,20,147,.35);
+      grid-column: 1 / -1;
+    }
+    @media (min-width: 900px) {
+      .perk-card.perk-seal { grid-column: span 2; }
+    }
+    .perk-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: #f4f4f4;
+      display: grid;
+      place-items: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .perk-card.perk-neon .perk-icon { background: rgba(57,255,20,.18); color: var(--ink); font-weight: 900; }
+    .perk-seal-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--pink);
+      color: white;
+      font-size: 10px;
+      font-weight: 1000;
+      letter-spacing: -.03em;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      line-height: .95;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(255,20,147,.35);
+    }
+    .perk-body { display: flex; flex-direction: column; gap: 2px; }
+    .perk-body strong { font-size: 12px; font-weight: 900; letter-spacing: -.02em; color: var(--ink); }
+    .perk-body span { font-size: 11px; color: #666; line-height: 1.35; }
+
+    /* Informações 02: Tipos de Sublimação Hero Card */
+    .sublimation-hero-card {
+      background: #0f0f0f;
+      color: white;
+      border-radius: 28px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,.22);
+      margin-bottom: 34px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #252525;
+    }
+    @media (min-width: 860px) {
+      .sublimation-hero-card {
+        grid-template-columns: 1fr 1fr;
+        padding: 34px 40px;
+        gap: 36px;
+      }
+    }
+    .sublimation-hero-card:before {
+      content: "";
+      position: absolute;
+      top: -30%;
+      right: -20%;
+      width: 60%;
+      height: 80%;
+      background: radial-gradient(circle, rgba(57,255,20,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .sublimation-hero-media {
+      position: relative;
+      background: radial-gradient(circle at center, #222 0%, #151515 100%);
+      border-radius: 22px;
+      overflow: hidden;
+      cursor: zoom-in;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      aspect-ratio: 1.35;
+      border: 1px solid #2a2a2a;
+    }
+    .sublimation-hero-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      transition: transform .35s ease;
+    }
+    .sublimation-hero-media:hover img { transform: scale(1.03); }
+    .sublimation-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: var(--green);
+      color: var(--ink);
+      font-size: 10px;
+      font-weight: 1000;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 5px 11px;
+      border-radius: 999px;
+      z-index: 2;
+    }
+    .sublimation-hero-content { position: relative; z-index: 2; }
+    .sublimation-tag {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 8px;
+    }
+    .sublimation-hero-content h3 {
+      font-size: clamp(24px, 4.5vw, 36px);
+      line-height: 1.05;
+      letter-spacing: -.05em;
+      margin: 0 0 14px;
+    }
+    .sublimation-hero-content p {
+      font-size: 13px;
+      color: #b5b5b5;
+      line-height: 1.6;
+      margin: 0 0 18px;
+    }
+    .sublimation-hero-content p strong { color: white; }
+    .sublimation-checklist {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .sublimation-checklist li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: #dedede;
+    }
+    .sublimation-checklist li span { color: var(--green); font-weight: 900; font-size: 14px; }
+    .sublimation-hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .sublimation-hero-actions .btn.outline {
+      background: transparent;
+      color: white;
+      border-color: #444;
+    }
+    .sublimation-hero-actions .btn.outline:hover { background: #222; }
+
+    /* Informações 02.1: Meia Folha Grid */
+    .sublimation-subhead {
+      margin: 36px 0 20px;
+      text-align: center;
+    }
+    .sublimation-subhead h3 {
+      font-size: clamp(22px, 4.2vw, 32px);
+      letter-spacing: -.05em;
+      margin: 6px 0 6px;
+    }
+    .sublimation-subhead p {
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+    .sublimation-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 760px) {
+      .sublimation-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    }
+    .sublimation-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 6px 20px rgba(0,0,0,.04);
+      transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+    }
+    .sublimation-card:hover {
+      transform: translateY(-3px);
+      border-color: #d0d0d0;
+      box-shadow: var(--shadow);
+    }
+    .sublimation-card-media {
+      position: relative;
+      background: #fbfbfb;
+      aspect-ratio: 1.35;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-in;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+    }
+    .sublimation-card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      transition: transform .3s ease;
+    }
+    .sublimation-card-media:hover img { transform: scale(1.04); }
+    .coverage-pill {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: var(--ink);
+      color: white;
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 4px 9px;
+      border-radius: 999px;
+      z-index: 2;
+    }
+    .sublimation-card-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .sublimation-mini-tag {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 4px;
+    }
+    .sublimation-card-body h4 {
+      font-size: 15px;
+      letter-spacing: -.03em;
+      margin: 0 0 8px;
+      line-height: 1.25;
+    }
+    .sublimation-card-body p {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.5;
+      margin: 0 0 14px;
+      flex: 1;
+    }
+    .sublimation-card-action button {
+      width: 100%;
+      min-height: 36px;
+      font-size: 11px;
+      border-radius: 10px;
+    }
+
+    /* Opcionais do Simulador (Viés, Rústico, Especial) */
+    .optional-addons-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .addon-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      border: 1px solid var(--line);
+      padding: 9px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      cursor: pointer;
+      user-select: none;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .addon-checkbox:hover { border-color: #ccc; }
+    .addon-checkbox:has(input:checked) {
+      border-color: var(--ink);
+      background: #fafafa;
+    }
+    .addon-checkbox input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--green);
+      flex-shrink: 0;
+    }
+    .addon-checkbox span strong { display: block; font-size: 12px; color: var(--ink); }
+    .addon-checkbox span small { display: block; font-size: 10.5px; color: #777; margin-top: 1px; }
+
+    /* Informações 03: Quadro de Regras / Condições Comerciais */
+    .rules-board {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 860px) {
+      .rules-board { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    }
+    .rule-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 6px 20px rgba(0,0,0,.03);
+      display: flex;
+      flex-direction: column;
+    }
+    .rule-card-featured {
+      background: linear-gradient(180deg, #ffffff 0%, #fcfbf6 100%);
+      border-color: rgba(217,182,93,.45);
+      box-shadow: 0 10px 30px rgba(217,182,93,.1);
+    }
+    .rule-card-header { margin-bottom: 16px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+    .rule-badge {
+      display: inline-block;
+      font-size: 9.5px;
+      font-weight: 1000;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+    }
+    .badge-green { background: rgba(57,255,20,.2); color: #0d6e00; }
+    .badge-pink { background: rgba(255,20,147,.15); color: #b80064; }
+    .badge-mustard { background: rgba(217,182,93,.25); color: #7d5e12; }
+
+    .rule-card-header h4 {
+      font-size: 18px;
+      letter-spacing: -.04em;
+      margin: 0;
+      color: var(--ink);
+    }
+    .rule-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .rule-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .rule-bullet {
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      background: #f4f4f4;
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .rule-content strong {
+      display: block;
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--ink);
+      line-height: 1.3;
+    }
+    .rule-content span {
+      display: block;
+      font-size: 11px;
+      color: #666;
+      line-height: 1.45;
+      margin-top: 2px;
+    }
+    .rule-highlight {
+      background: rgba(217,182,93,.12);
+      border: 1px solid rgba(217,182,93,.35);
+      border-radius: 12px;
+      padding: 10px;
+      margin: -2px 0 2px;
+    }
+    .rule-highlight strong { color: #5c4405; font-size: 12.5px; }
+
     /* Vantagens & Rodapé */
     .benefits { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:30px 0; }
     .benefit { border:1px solid var(--line); border-radius:17px; padding:15px; }
@@ -408,7 +843,11 @@
       <span class="brand-mark">CT</span>
       <span>CARNA TILLER<small>2027 • TILLER CONFECÇÕES</small></span>
     </a>
-    <a class="pill" href="#orcamento">Simular orçamento ↗</a>
+    <div class="topbar-actions">
+      <a class="topbar-link" href="#estampas">Tipos de estampa</a>
+      <a class="topbar-link" href="#condicoes">Condições</a>
+      <a class="pill" href="#orcamento">Simular orçamento ↗</a>
+    </div>
   </header>
 
   <main id="top">
@@ -429,6 +868,46 @@
         <div class="hero-stamp">
           <span class="stamp-dots"><i style="background:var(--green)"></i><i style="background:var(--pink)"></i><i style="background:var(--mustard)"></i></span>
           4 categorias · 200 modelos para escolher
+        </div>
+
+        <!-- Informações 01: Vantagens e Compromissos de Destaque -->
+        <div class="hero-perks-grid" aria-label="Compromissos CarnaTiller">
+          <div class="perk-card perk-neon">
+            <div class="perk-badge">GRÁTIS</div>
+            <div class="perk-icon">✦</div>
+            <div class="perk-body">
+              <strong>ARTE GRÁTIS</strong>
+              <span>Criamos ou ajustamos a arte do seu bloco sem custo adicional</span>
+            </div>
+          </div>
+          <div class="perk-card">
+            <div class="perk-icon">⚡</div>
+            <div class="perk-body">
+              <strong>ENTREGA EXPRESSA</strong>
+              <span>Agilidade para você não deixar o bloco na mão</span>
+            </div>
+          </div>
+          <div class="perk-card">
+            <div class="perk-icon">🏠</div>
+            <div class="perk-body">
+              <strong>ENTREGA A DOMICÍLIO</strong>
+              <span>Receba direto no seu endereço com comodidade</span>
+            </div>
+          </div>
+          <div class="perk-card">
+            <div class="perk-icon">★</div>
+            <div class="perk-body">
+              <strong>MELHOR CUSTO-BENEFÍCIO</strong>
+              <span>Direto da fábrica Tiller com tabela progressiva</span>
+            </div>
+          </div>
+          <div class="perk-card perk-seal">
+            <div class="perk-seal-mark">1 ANO</div>
+            <div class="perk-body">
+              <strong>1 ANO DE GARANTIA NA ESTAMPA</strong>
+              <span>A Tiller garante a qualidade, vivacidade e fixação da sua estampa</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -494,6 +973,100 @@
       </div>
     </div>
 
+    </section>
+
+    <!-- Informações 02 e 02.1: Tipos de Sublimação com Imagens Artísticas dos Modelos -->
+    <section class="wrap section" id="estampas">
+      <div class="section-head">
+        <div class="eyebrow" style="margin-bottom:6px;">Tecnologia & Acabamento</div>
+        <h2>Tipos de Sublimação<span style="color:var(--pink)">.</span></h2>
+        <p>Escolha a cobertura ideal para a identidade visual do seu bloco: estampa total ou meia folha artística.</p>
+      </div>
+
+      <!-- Informações 02: Sublimação Total -->
+      <div class="sublimation-hero-card">
+        <div class="sublimation-hero-media" data-zoom-img="imagens/estampas/sublimacao-total.png" title="Toque para ampliar o abadá em sublimação total">
+          <span class="sublimation-badge">Cobertura Máxima</span>
+          <img src="imagens/estampas/sublimacao-total.png" alt="Abadá CarnaTiller frente e costas em sublimação total" loading="lazy">
+          <div class="zoom-hint">🔍 Ampliar modelo</div>
+        </div>
+        <div class="sublimation-hero-content">
+          <div class="sublimation-tag">Sublimação Total</div>
+          <h3>Abadá Estampado Total Frente e Costa</h3>
+          <ul class="sublimation-checklist">
+            <li><span>✦</span> Impressão contínua em alta definição frente e verso</li>
+            <li><span>✦</span> Cores neon com brilho intenso e degradês perfeitos</li>
+            <li><span>✦</span> Toque suave e respirável — a tinta penetra na fibra do tecido</li>
+            <li><span>✦</span> 1 ano de garantia na vivacidade da estampa Tiller</li>
+          </ul>
+          <div class="sublimation-hero-actions">
+            <a class="btn green" href="#orcamento">Simular com sublimação total</a>
+            <button class="btn outline" type="button" onclick="openDirectImageModal('imagens/estampas/sublimacao-total.png', 'Sublimação Total', 'Abadá Frente e Costa')">Ver detalhe da peça ↗</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sublimação Meia Folha -->
+      <div class="sublimation-subhead">
+        <div class="eyebrow">Opções Econômicas & Localizadas</div>
+        <h3>Sublimação Meia Folha</h3>
+        <p>Estilos inteligentes de estamparia localizada para destacar sua logomarca ou patrocinadores com excelente custo-benefício.</p>
+      </div>
+
+      <div class="sublimation-grid">
+        <!-- Meia Folha Horizontal -->
+        <article class="sublimation-card">
+          <div class="sublimation-card-media" data-zoom-img="imagens/estampas/meia-folha-horizontal.png" title="Clique para ampliar">
+            <span class="coverage-pill">Faixa Horizontal</span>
+            <img src="imagens/estampas/meia-folha-horizontal.png" alt="Abadá Frente e Costa Meia Folha Horizontal" loading="lazy">
+            <div class="zoom-hint">🔍 Ampliar</div>
+          </div>
+          <div class="sublimation-card-body">
+            <div class="sublimation-mini-tag">Opção A</div>
+            <h4>Frente e Costa Meia Folha Horizontal</h4>
+            <p>Faixa horizontal no peito e nas costas. Ideal para blocos com patrocinadores em régua e visual tradicional com fundo de malha liso.</p>
+            <div class="sublimation-card-action">
+              <button type="button" class="btn outline" onclick="openDirectImageModal('imagens/estampas/meia-folha-horizontal.png', 'Meia Folha Horizontal', 'Frente e Costa')">Ampliar modelo ↗</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Meia Folha Vertical -->
+        <article class="sublimation-card">
+          <div class="sublimation-card-media" data-zoom-img="imagens/estampas/meia-folha-vertical.png" title="Clique para ampliar">
+            <span class="coverage-pill">Faixa Vertical</span>
+            <img src="imagens/estampas/meia-folha-vertical.png" alt="Abadá Frente e Costa Meia Folha Vertical" loading="lazy">
+            <div class="zoom-hint">🔍 Ampliar</div>
+          </div>
+          <div class="sublimation-card-body">
+            <div class="sublimation-mini-tag">Opção B</div>
+            <h4>Frente e Costa Meia Folha Vertical</h4>
+            <p>Eixo vertical moderno que valoriza artes altas, tipografias verticais e silhueta mais alongada no peito e dorso.</p>
+            <div class="sublimation-card-action">
+              <button type="button" class="btn outline" onclick="openDirectImageModal('imagens/estampas/meia-folha-vertical.png', 'Meia Folha Vertical', 'Frente e Costa')">Ampliar modelo ↗</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Frente Total e Costa Localizada -->
+        <article class="sublimation-card">
+          <div class="sublimation-card-media" data-zoom-img="imagens/estampas/frente-total-costa-localizada.png" title="Clique para ampliar">
+            <span class="coverage-pill">Misto Inteligente</span>
+            <img src="imagens/estampas/frente-total-costa-localizada.png" alt="Abadá Frente Total e Costa Localizada" loading="lazy">
+            <div class="zoom-hint">🔍 Ampliar</div>
+          </div>
+          <div class="sublimation-card-body">
+            <div class="sublimation-mini-tag">Opção C</div>
+            <h4>Frente Total e Costa Localizada</h4>
+            <p>Impacto visual máximo na frente (estampa cheia) com verso neutro e logo/número localizado nas costas. Equilíbrio perfeito entre destaque e custo.</p>
+            <div class="sublimation-card-action">
+              <button type="button" class="btn outline" onclick="openDirectImageModal('imagens/estampas/frente-total-costa-localizada.png', 'Frente Total e Costa Localizada', 'Misto')">Ampliar modelo ↗</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <!-- Simulador de Orçamento -->
     <section class="quote-section" id="orcamento">
       <div class="wrap quote-layout">
@@ -532,6 +1105,33 @@
                 <option value="dry" data-cost="3.00">Dry Fit Esportivo (+ R$ 3,00 / un)</option>
                 <option value="pp" data-cost="2.00">PP Premium Soft (+ R$ 2,00 / un)</option>
               </select>
+            </div>
+          </div>
+
+          <div class="options-box">
+            <span class="field-label">Acabamentos e opcionais</span>
+            <div class="optional-addons-grid">
+              <label class="addon-checkbox">
+                <input type="checkbox" id="addonVies" data-cost="0.50">
+                <span>
+                  <strong>Viés colorido</strong>
+                  <small>+ R$ 0,50 / un · Destaque de cor nas cavas e gola</small>
+                </span>
+              </label>
+              <label class="addon-checkbox">
+                <input type="checkbox" id="addonRustico" data-cost="1.00">
+                <span>
+                  <strong>Acabamento rústico</strong>
+                  <small>+ R$ 1,00 / un · Barra e cavas a fio estilizadas</small>
+                </span>
+              </label>
+              <label class="addon-checkbox">
+                <input type="checkbox" id="addonEspecial" data-cost="5.00">
+                <span>
+                  <strong>Tamanhos especiais</strong>
+                  <small>+ R$ 5,00 / un · Grade acima de GG / XG sob consulta</small>
+                </span>
+              </label>
             </div>
           </div>
 
@@ -578,6 +1178,140 @@
 
           <p class="quote-note">Estimativa prévia calculada com base na configuração selecionada. Valores finais e prazos confirmados no atendimento.</p>
           <button class="btn green" id="requestQuote" type="button">Solicitar orçamento no WhatsApp ↗</button>
+        </div>
+      </div>
+    </section>
+
+    </section>
+
+    <!-- Informações 03: Condições Comerciais, Produção & Pagamentos -->
+    <section class="wrap section" id="condicoes">
+      <div class="section-head">
+        <div class="eyebrow" style="margin-bottom:6px;">Transparência & Regras Claras</div>
+        <h2>Condições de Pedido<span style="color:var(--pink)">.</span></h2>
+        <p>Tudo o que você precisa saber sobre prazos, acabamentos, descontos e formas de pagamento facilitadas da Tiller Confecções.</p>
+      </div>
+
+      <div class="rules-board">
+        <!-- Coluna 1: Prazos e Pedido -->
+        <div class="rule-card">
+          <div class="rule-card-header">
+            <span class="rule-badge badge-green">Produção & Prazos</span>
+            <h4>Pedido & Entrega</h4>
+          </div>
+          <ul class="rule-list">
+            <li>
+              <div class="rule-bullet">✦</div>
+              <div class="rule-content">
+                <strong>Pedido mínimo: 10 unidades</strong>
+                <span>Ideal para turmas, pequenos grupos, equipes ou grandes blocos.</span>
+              </div>
+            </li>
+            <li>
+              <div class="rule-bullet">⏱</div>
+              <div class="rule-content">
+                <strong>Prazo de entrega normal: 10 a 15 dias úteis</strong>
+                <span>Contados a partir da aprovação final da arte e confirmação do sinal.</span>
+              </div>
+            </li>
+            <li>
+              <div class="rule-bullet">⚡</div>
+              <div class="rule-content">
+                <strong>Opção expressa sob consulta</strong>
+                <span>Precisa de prazo mais curto? Ative a produção com urgência no simulador.</span>
+              </div>
+            </li>
+            <li>
+              <div class="rule-bullet">🚚</div>
+              <div class="rule-content">
+                <strong>Liberação de entrega</strong>
+                <span>Qualquer entrega ou despacho só será realizada após a conclusão total do débito.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Coluna 2: Acabamentos e Opcionais -->
+        <div class="rule-card">
+          <div class="rule-card-header">
+            <span class="rule-badge badge-pink">Personalização</span>
+            <h4>Acabamentos & Extras</h4>
+          </div>
+          <ul class="rule-list">
+            <li>
+              <div class="rule-bullet">🎨</div>
+              <div class="rule-content">
+                <strong>Viés colorido: + R$ 0,50 / unidade</strong>
+                <span>Contorno da gola e cavas em cor contrastante neon ou personalizada.</span>
+              </div>
+            </li>
+            <li>
+              <div class="rule-bullet">✂</div>
+              <div class="rule-content">
+                <strong>Acabamento rústico: - R$ 1,00 / unidade</strong>
+                <span>Visual despojado carnavalesco a fio com desconto no valor por peça.</span>
+              </div>
+            </li>
+            <li>
+              <div class="rule-bullet">📏</div>
+              <div class="rule-content">
+                <strong>Tamanho especial: + R$ 5,00 / unidade</strong>
+                <span>Peças acima da grade padrão (consultar tabela de medidas no atendimento).</span>
+              </div>
+            </li>
+            <li>
+              <div class="rule-bullet">🎁</div>
+              <div class="rule-content">
+                <strong>Arte grátis</strong>
+                <span>Sem taxa de criação ou adaptação para os modelos CarnaTiller 2027.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Coluna 3: Formas de Pagamento e Facilidades -->
+        <div class="rule-card rule-card-featured">
+          <div class="rule-card-header">
+            <span class="rule-badge badge-mustard">Facilidades</span>
+            <h4>Pagamentos & Descontos</h4>
+          </div>
+          <ul class="rule-list">
+            <li class="rule-highlight">
+              <div class="rule-bullet">💰</div>
+              <div class="rule-content">
+                <strong>5% DE DESCONTO À VISTA</strong>
+                <span>Válido para pagamentos em espécie, Pix ou transferência bancária.</span>
+              </div>
+            </li>
+            <li>
+              <div class="rule-bullet">📋</div>
+              <div class="rule-content">
+                <strong>Sinal de 50% para início da produção</strong>
+                <span>O restante (50%) é quitado quando a mercadoria estiver pronta para entrega/retirada.</span>
+              </div>
+            </li>
+            <li>
+              <div class="rule-bullet">💳</div>
+              <div class="rule-content">
+                <strong>Cartão de crédito: vencimento ou até 3x</strong>
+                <span>Parcelamento facilitado para seu bloco se organizar com antecedência.</span>
+              </div>
+            </li>
+            <li>
+              <div class="rule-bullet">💳</div>
+              <div class="rule-content">
+                <strong>Parcelado em 4x ou 5x</strong>
+                <span>Disponível exclusivamente para pagamento do valor total no ato do fechamento do pedido.</span>
+              </div>
+            </li>
+            <li>
+              <div class="rule-bullet">🏦</div>
+              <div class="rule-content">
+                <strong>Boleto ou contas de outros bancos</strong>
+                <span>Liberação da produção ou entrega somente após comprovante e efetiva compensação bancária na conta da empresa.</span>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
@@ -645,6 +1379,9 @@
     const cutModel = document.getElementById("cutModel");
     const fabricType = document.getElementById("fabricType");
     const urgencyCheck = document.getElementById("urgencyCheck");
+    const addonVies = document.getElementById("addonVies");
+    const addonRustico = document.getElementById("addonRustico");
+    const addonEspecial = document.getElementById("addonEspecial");
     const shippingRadios = [...document.querySelectorAll('input[name="shippingMethod"]')];
     const deliveryAddressWrap = document.getElementById("deliveryAddressWrap");
     const deliveryAddress = document.getElementById("deliveryAddress");
@@ -681,6 +1418,31 @@
 
     function imagePath(category, n) {
       return `imagens/${category.folder}/modelo-${pad3(n)}.jpg`;
+    }
+
+    function sendModelToWhatsApp(n) {
+      n = clampModel(n);
+      const category = categoryOf(n);
+      const categoryName = category ? category.name : "-";
+      const modelRef = modelName(n);
+      const urlText = isPublished() ? ` (${modelUrl(n)})` : "";
+
+      const msg = [
+        "Olá, Tiller Confecções! Gostei muito deste modelo do CarnaTiller 2027 e quero encomendar para o meu bloco:",
+        "",
+        `• Modelo Escolhido: ${modelRef}${urlText}`,
+        `• Categoria: ${categoryName}`,
+        "",
+        "Gostaria de saber sobre prazos, tabela de quantidade e como faço para personalizar com o nome e cores do meu bloco."
+      ].join("\n");
+
+      const waUrl = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+      const win = window.open(waUrl, "_blank");
+      if (win) {
+        win.opener = null;
+      } else {
+        location.href = waUrl;
+      }
     }
 
     function modelUrl(n) {
@@ -755,6 +1517,22 @@
       }
     }
 
+    // Modal para imagens diretas (como os tipos de sublimação das informações 02 e 02.1)
+    function openDirectImageModal(src, title, subtitle = "CarnaTiller 2027") {
+      clearTimeout(modalClearTimer);
+      currentModalNumber = null;
+      modalImg.src = src;
+      modalImg.alt = `${title} - ${subtitle}`;
+      modalTitle.textContent = title;
+      modalCategory.textContent = subtitle;
+
+      lastFocusedBeforeModal = document.activeElement;
+      imageModal.classList.add("open");
+      imageModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      modalClose.focus({ preventScroll: true });
+    }
+
     modalImg.addEventListener("error", () => {
       if (!imageModal.classList.contains("open") || !modalImg.getAttribute("src")) return;
       if (currentModalNumber) markMissing(currentModalNumber);
@@ -782,7 +1560,10 @@
     });
 
     modalSelectBtn.addEventListener("click", () => {
-      if (!currentModalNumber) return;
+      if (!currentModalNumber) {
+        closeImageModal();
+        return;
+      }
       const num = currentModalNumber;
       closeImageModal();
       selectModel(num, true, true);
@@ -829,8 +1610,8 @@
           <div class="model-info-top"><span class="model-number">CT · ${pad3(n)}</span><span class="model-number">${category.name}</span></div>
           <h3>${modelName(n)}</h3>
           <div class="model-actions">
-            <button class="choose" type="button" data-select="${n}">Selecionar modelo</button>
-            <a class="view" href="#modelo-${pad3(n)}" data-view="${n}">Link direto ↗</a>
+            <button class="choose" type="button" data-select="${n}">Selecionar</button>
+            <button class="whatsapp-direct" type="button" data-wa-model="${n}">Escolher modelo ↗</button>
           </div>
         </div>`;
 
@@ -875,12 +1656,12 @@
           return;
         }
 
-        const viewLink = e.target.closest("[data-view]");
-        if (viewLink) {
-          e.preventDefault();
-          const num = Number(viewLink.dataset.view);
+        const waBtn = e.target.closest("[data-wa-model]");
+        if (waBtn) {
+          const num = Number(waBtn.dataset.waModel);
           selectModel(num, true, true);
-          copyText(modelUrl(num), "Link direto copiado.");
+          sendModelToWhatsApp(num);
+          return;
         }
       });
     }
@@ -1055,7 +1836,12 @@
       const cutAdditional = parseFloat(cutModel.selectedOptions[0]?.dataset.cost || 0);
       const fabricAdditional = parseFloat(fabricType.selectedOptions[0]?.dataset.cost || 0);
 
-      let unit = baseUnit + cutAdditional + fabricAdditional;
+      // Adicionais opcionais (Informações 03)
+      const viesCost = addonVies && addonVies.checked ? parseFloat(addonVies.dataset.cost || 0) : 0;
+      const rusticoCost = addonRustico && addonRustico.checked ? -parseFloat(addonRustico.dataset.cost || 0) : 0; // Desconto de R$ 1,00
+      const especialCost = addonEspecial && addonEspecial.checked ? parseFloat(addonEspecial.dataset.cost || 0) : 0;
+
+      let unit = Math.max(1, baseUnit + cutAdditional + fabricAdditional + viesCost + rusticoCost + especialCost);
       const isUrgent = urgencyCheck.checked;
       if (isUrgent) unit *= 1.15;
 
@@ -1063,7 +1849,7 @@
       unit = Math.round(unit * 100) / 100;
       const total = Math.round(unit * qty * 100) / 100;
 
-      return { qty, unit, total, isUrgent };
+      return { qty, unit, total, isUrgent, viesCost, rusticoCost, especialCost };
     }
 
     function updateQuote() {
@@ -1109,6 +1895,9 @@
     cutModel.addEventListener("change", updateQuote);
     fabricType.addEventListener("change", updateQuote);
     urgencyCheck.addEventListener("change", updateQuote);
+    if (addonVies) addonVies.addEventListener("change", updateQuote);
+    if (addonRustico) addonRustico.addEventListener("change", updateQuote);
+    if (addonEspecial) addonEspecial.addEventListener("change", updateQuote);
 
     shippingRadios.forEach(radio => {
       radio.addEventListener("change", () => {
@@ -1195,6 +1984,12 @@
 
       const cutName = cutModel.selectedOptions[0].text;
       const fabricName = fabricType.selectedOptions[0].text;
+      const addons = [];
+      if (addonVies && addonVies.checked) addons.push("Viés colorido (+R$ 0,50)");
+      if (addonRustico && addonRustico.checked) addons.push("Acabamento rústico (-R$ 1,00)");
+      if (addonEspecial && addonEspecial.checked) addons.push("Tamanho especial (+R$ 5,00)");
+      const addonsText = addons.length ? addons.join(", ") : "Nenhum";
+
       const shippingText = selectedShipping === "entrega"
         ? `Entrega no local (Endereço: ${deliveryAddress.value.trim() || "A informar"} - valor negociável)`
         : "Retirada no local (Grátis)";
@@ -1210,9 +2005,11 @@
         `• Quantidade: ${qty} peças`,
         `• Modelo do abadá: ${cutName}`,
         `• Tipo de malha: ${fabricName}`,
-        `• Prazo / Urgência: ${isUrgent ? "Sim, prazo com urgência (+15%)" : "Prazo normal"}`,
+        `• Acabamentos/Opcionais: ${addonsText}`,
+        `• Prazo / Urgência: ${isUrgent ? "Sim, prazo com urgência (+15%)" : "Prazo normal (10 a 15 dias úteis)"}`,
         `• Logística: ${shippingText}`,
         `• Estimativa do simulador: ${money(total)} (${money(unit)} por peça)`,
+        "• Condição de pagamento pretendida: Sinal 50% + 50% na entrega (ou 5% desc. à vista no Pix)",
         "",
         "Por favor, confirmem a disponibilidade, valores e prazo de entrega."
       ];
