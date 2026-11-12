@@ -1,7 +1,1222 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>CarnaTiller 2027 | Modelos prontos</title>
+  <meta name="description" content="Escolha seu modelo de abadá CarnaTiller 2027 e simule seu orçamento online com personalizações.">
+  <style>
+    :root {
+      --green: #39ff14;
+      --pink: #ff1493;
+      --mustard: #d9b65d;
+      --ink: #111111;
+      --paper: #ffffff;
+      --muted: #6b7280;
+      --line: #e8e8e8;
+      --radius: 22px;
+      --shadow: 0 14px 40px rgba(17,17,17,.09);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background: var(--paper); color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    button, input, select, textarea { font: inherit; }
+    button, a, input[type="range"] { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; }
+    .wrap { width: min(1120px, 100% - 32px); margin-inline: auto; }
+
+    /* Topbar */
+    .topbar {
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding: 17px 0; border-bottom:1px solid var(--line);
+    }
+    .brand { display:flex; align-items:center; gap:10px; text-decoration:none; font-weight:950; letter-spacing:-.06em; line-height:.9; }
+    .brand-mark { width:35px; height:35px; display:grid; place-items:center; background:var(--green); border-radius:50% 42% 48% 38%; transform:rotate(-8deg); font-weight:1000; }
+    .brand span:last-child { font-size:18px; }
+    .brand small { display:block; margin-top:4px; font-size:10px; letter-spacing:.18em; font-weight:800; }
+    .pill { border:1px solid var(--ink); border-radius:999px; padding:9px 13px; font-size:12px; font-weight:850; text-decoration:none; white-space:nowrap; }
+
+    /* Hero com imagem posicionada no topo (acima do texto) */
+    .hero { padding: 26px 0 28px; }
+
+    /* Título + logomarca lado a lado (logo à direita, máxima proporção 9/3 dentro do container) */
+    .hero-title-row {
+      display: flex;
+      align-items: center;
+      gap: clamp(8px, 2vw, 24px);
+      margin: 16px 0 16px;
+    }
+    .hero-title-row h1 { margin: 0; flex: 0 0 auto; }
+    .hero-top-media {
+      flex: 1 1 0;
+      min-width: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-png {
+      width: 100%;
+      max-width: 760px;
+      height: auto;
+      max-height: 600px;
+      object-fit: contain;
+      display: block;
+      filter: none !important;
+      box-shadow: none !important;
+      transition: transform .3s ease;
+    }
+    .hero-png:hover { transform: scale(1.02); }
+
+    .eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:900; letter-spacing:.16em; text-transform:uppercase; }
+    .eyebrow:before { content:""; width:23px; height:5px; background:var(--pink); border-radius:99px; }
+    h1 { font-size:clamp(38px, 8.5vw, 72px); line-height:.92; letter-spacing:-.075em; margin:16px 0 16px; max-width: 820px; }
+    h1 .neon { position:relative; z-index:0; white-space:nowrap; }
+    h1 .neon:after { content:""; position:absolute; z-index:-1; left:-2%; right:-3%; bottom:4%; height:24%; background:var(--green); transform:rotate(-2deg); border-radius:4px; }
+    .hero p { max-width:540px; color:#525252; font-size:15px; line-height:1.6; margin:0 0 22px; }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:10px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:46px; padding:12px 18px; border:0; border-radius:999px; background:var(--ink); color:white; font-weight:850; text-decoration:none; cursor:pointer; }
+    .btn.green { background:var(--green); color:var(--ink); }
+    .btn.outline { background:white; color:var(--ink); border:1px solid var(--line); }
+    .hero-stamp { margin-top:24px; display:flex; align-items:center; gap:10px; font-size:11px; color:#555; font-weight:750; }
+    .stamp-dots { display:flex; gap:4px; }
+    .stamp-dots i { width:9px; height:9px; border-radius:50%; display:block; }
+
+    /* Modelos & Carrossel */
+    .section { padding:30px 0 42px; }
+    .section-head { text-align: center; margin-bottom: 22px; }
+    .section-head h2 { font-size:clamp(28px, 6vw, 42px); line-height:1; letter-spacing:-.06em; margin:8px 0 6px; }
+    .section-head p { color:var(--muted); font-size:13px; margin:0 auto; max-width:440px; line-height:1.45; }
+
+    .category-nav-wrapper {
+      width: 100%;
+      margin: 10px 0 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .category-tabs {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 6px calc((100% - 150px) / 2) 14px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      scroll-behavior: smooth;
+    }
+    .category-tabs::-webkit-scrollbar { display:none; }
+
+    .tab {
+      flex: 0 0 auto;
+      scroll-snap-align: center;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+      padding: 11px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 850;
+      cursor: pointer;
+      transition: transform .22s ease, background .22s ease, color .22s ease, border-color .22s ease;
+      white-space: nowrap;
+    }
+    .tab.active {
+      background: var(--ink);
+      color: white;
+      border-color: var(--ink);
+      transform: scale(1.04);
+    }
+
+    /* Carrossel Contínuo */
+    .carousel-shell { position:relative; padding:10px 0 22px; }
+    .carousel-track {
+      display:flex; align-items:center; gap:14px; overflow-x:auto; padding:14px calc((100% - min(74vw, 310px))/2) 22px;
+      scroll-snap-type:x mandatory; scrollbar-width:none; overscroll-behavior-x:contain;
+    }
+    .carousel-track::-webkit-scrollbar { display:none; }
+
+    .model-card {
+      flex:0 0 min(74vw, 310px); scroll-snap-align:center; position:relative; border:1px solid var(--line);
+      border-radius:24px; overflow:hidden; background:#f8f8f8; transform:scale(1); opacity:1;
+      transition:transform .25s ease, opacity .25s ease, box-shadow .25s ease, border-color .25s ease; box-shadow:none;
+    }
+
+    .carousel-track.has-interacted .model-card {
+      transform:scale(.92); opacity:.74;
+    }
+    .carousel-track.has-interacted .model-card.is-active {
+      transform:scale(1); opacity:1; box-shadow:var(--shadow); border-color:#d6d6d6;
+    }
+
+    .model-art {
+      aspect-ratio: .78; position:relative; overflow:hidden; display:grid; place-items:center;
+      cursor: zoom-in;
+      background:
+        radial-gradient(circle at 12% 12%, var(--pink) 0 3px, transparent 4px),
+        radial-gradient(circle at 83% 22%, var(--mustard) 0 5px, transparent 6px),
+        radial-gradient(circle at 20% 82%, var(--green) 0 5px, transparent 6px),
+        linear-gradient(145deg,#fff 0%,#fdfdfd 58%,#f5f5f5 100%);
+    }
+    /* Sem foto disponível: não sugere zoom */
+    .model-card.no-image .model-art { cursor: default; }
+    .model-art:before, .model-art:after { content:""; position:absolute; border-radius:80% 30% 70% 35%; width:65%; height:12%; background:var(--green); top:12%; left:-10%; transform:rotate(-34deg); }
+    .model-art:after { width:53%; height:10%; top:auto; bottom:14%; left:auto; right:-8%; background:var(--pink); transform:rotate(-35deg); }
+    .model-art img { width:100%; height:100%; object-fit:cover; display:block; position:absolute; inset:0; z-index:1; }
+
+    .zoom-hint {
+      position: absolute; bottom: 10px; right: 10px; z-index: 3;
+      background: rgba(17, 17, 17, 0.7); backdrop-filter: blur(4px);
+      color: white; font-size: 11px; font-weight: 800; padding: 4px 8px;
+      border-radius: 999px; display: flex; align-items: center; gap: 4px;
+      opacity: 0.85; transition: opacity .2s; pointer-events: none;
+    }
+    .model-art:hover .zoom-hint { opacity: 1; }
+
+    .placeholder-logo { position:relative; z-index:0; text-align:center; transform:rotate(-5deg); padding:18px; }
+    .placeholder-logo .crown { font-size:29px; line-height:1; color:var(--mustard); font-weight:900; }
+    .placeholder-logo strong { display:block; font-size:clamp(31px,8vw,48px); line-height:.83; letter-spacing:-.09em; font-weight:1000; }
+    .placeholder-logo small { display:block; font-weight:950; font-size:22px; letter-spacing:-.05em; margin-top:9px; }
+    .placeholder-logo em { display:inline-block; font-style:normal; font-size:10px; letter-spacing:.2em; font-weight:900; margin-top:12px; }
+
+    .model-info { padding:14px; background:white; }
+    .model-info-top { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .model-number { font-size:11px; font-weight:950; letter-spacing:.12em; color:#777; }
+    .model-info h3 { margin:5px 0 12px; font-size:17px; letter-spacing:-.04em; }
+    .model-actions { display:flex; gap:8px; }
+    .model-actions button, .model-actions a { flex:1; display:flex; justify-content:center; align-items:center; min-height:39px; border-radius:12px; border:1px solid var(--line); text-decoration:none; font-size:12px; font-weight:850; background:white; color:var(--ink); cursor:pointer; }
+    .model-actions .choose { background:var(--green); border-color:var(--green); }
+    .model-actions .view { background:white; }
+
+    .carousel-nav-btn {
+      position: absolute; top: 46%; transform: translateY(-50%); width: 44px; height: 44px; border-radius: 50%;
+      background: white; color: var(--ink); border: 1px solid var(--line); box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+      display: grid; place-items: center; cursor: pointer; z-index: 5; font-size: 16px; font-weight: bold;
+    }
+    .carousel-nav-btn:hover { background: #f0f0f0; }
+    .carousel-nav-btn:disabled { opacity: .35; cursor: default; }
+    .carousel-nav-btn.prev { left: 8px; }
+    .carousel-nav-btn.next { right: 8px; }
+    .carousel-hint { text-align:center; color:#777; font-size:11px; margin-top:-4px; }
+    .carousel-hint b { color:var(--ink); }
+
+    /* Barra do Modelo Selecionado com MINIATURA */
+    .selected-bar {
+      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px;
+      border:1px solid var(--line); border-radius:20px; padding:12px 16px; margin-top:16px; background:white;
+    }
+    .selected-model-preview { display:flex; align-items:center; gap:12px; }
+    .selected-thumb-wrap {
+      width:52px; height:52px; border-radius:14px; overflow:hidden; border:1px solid var(--line);
+      background:#f4f4f4; position:relative; flex-shrink:0; display:grid; place-items:center;
+      cursor: zoom-in; padding:0;
+    }
+    .selected-thumb-wrap.no-image { cursor: default; }
+    .selected-thumb-wrap img { width:100%; height:100%; object-fit:cover; display:none; position:relative; z-index:2; }
+    .selected-thumb-fallback {
+      font-size:14px; font-weight:1000; color:var(--ink); background:var(--green);
+      width:100%; height:100%; display:grid; place-items:center; letter-spacing:-.05em;
+    }
+    .selected-info small { display:block; color:var(--muted); font-size:10px; text-transform:uppercase; letter-spacing:.12em; font-weight:850; }
+    .selected-info strong { display:block; margin-top:3px; font-size:15px; letter-spacing:-.02em; }
+    .selected-bar-actions { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+    .selected-bar-actions .btn { min-height:40px; padding:9px 14px; font-size:12px; }
+
+    /* Modal / Lightbox de Tela Cheia */
+    .image-modal {
+      position: fixed; inset: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px; opacity: 0; pointer-events: none; visibility: hidden;
+      transition: opacity .25s ease, visibility 0s linear .25s;
+    }
+    .image-modal.open {
+      opacity: 1; pointer-events: auto; visibility: visible;
+      transition: opacity .25s ease;
+    }
+    .modal-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(17, 17, 17, 0.88);
+      backdrop-filter: blur(8px);
+    }
+    .modal-box {
+      position: relative; z-index: 2;
+      max-width: min(92vw, 460px);
+      max-height: 90vh;
+      display: flex; flex-direction: column;
+      background: #181818; border: 1px solid #333;
+      border-radius: 24px; overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,.6);
+      transform: scale(.92);
+      transition: transform .25s ease;
+    }
+    .image-modal.open .modal-box {
+      transform: scale(1);
+    }
+    .modal-close {
+      position: absolute; top: 12px; right: 12px;
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 0; background: rgba(0,0,0,0.65); color: white;
+      font-size: 17px; font-weight: bold; cursor: pointer;
+      display: grid; place-items: center; z-index: 10;
+      transition: background .2s, transform .2s;
+    }
+    .modal-close:hover {
+      background: var(--pink); transform: rotate(90deg);
+    }
+    .modal-image-wrap {
+      width: 100%; max-height: 68vh;
+      display: flex; align-items: center; justify-content: center;
+      background: #111; overflow: hidden;
+    }
+    .modal-image-wrap img {
+      max-width: 100%; max-height: 68vh;
+      object-fit: contain; display: block;
+    }
+    .modal-caption {
+      width: 100%; padding: 14px 18px;
+      background: #1a1a1a; border-top: 1px solid #282828;
+      color: white; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .modal-caption strong { display: block; font-size: 15px; }
+    .modal-caption span { display: block; font-size: 11px; color: var(--green); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; margin-top: 2px; }
+    .modal-caption .btn { min-height: 38px; padding: 8px 16px; font-size: 12px; }
+
+    /* Simulador de Orçamento */
+    .quote-section { background:#f7f7f7; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:44px 0; }
+    .quote-layout { display:grid; grid-template-columns:1fr; gap:26px; }
+    .quote-title h2 { font-size:clamp(32px,8vw,54px); letter-spacing:-.07em; line-height:.94; margin:12px 0; }
+    .quote-title p { color:#666; font-size:14px; line-height:1.6; max-width:470px; }
+
+    .quote-card { background:white; border:1px solid var(--line); border-radius:24px; padding:22px; box-shadow:0 10px 30px rgba(0,0,0,.04); }
+
+    .quantity-row { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .quantity-row label { font-size:13px; font-weight:900; }
+    .stepper { display:inline-flex; align-items:center; border:1px solid var(--line); border-radius:14px; background:#fbfbfb; overflow:hidden; }
+    .stepper-btn {
+      width:40px; height:42px; border:0; background:transparent; font-size:20px; font-weight:900;
+      cursor:pointer; display:grid; place-items:center; color:var(--ink);
+    }
+    .stepper-btn:hover { background:var(--line); }
+    .stepper-btn:disabled { opacity:.35; cursor:default; background:transparent; }
+    .stepper-input {
+      width:60px; height:42px; border:0; background:white; text-align:center; font-size:18px;
+      font-weight:1000; outline:none; border-left:1px solid var(--line); border-right:1px solid var(--line);
+      -moz-appearance: textfield; appearance: textfield;
+    }
+    .stepper-input::-webkit-outer-spin-button, .stepper-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+    input[type="range"] { width:100%; margin:16px 0 6px; accent-color:#111; cursor:pointer; }
+    .range-labels { display:flex; justify-content:space-between; gap:10px; color:#777; font-size:11px; margin-bottom:20px; }
+    .range-labels span:last-child { text-align:right; }
+
+    .form-group-grid { display:grid; grid-template-columns:1fr; gap:14px; margin-bottom:18px; }
+    .field-label { display:block; font-size:11px; font-weight:850; text-transform:uppercase; letter-spacing:.08em; color:#444; margin-bottom:6px; }
+    .custom-select {
+      width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 14px;
+      background:#fff; font-size:13px; font-weight:700; color:var(--ink); outline:none; cursor:pointer;
+    }
+    .custom-select:focus { border-color:var(--ink); }
+
+    .options-box { background:#fafafa; border:1px solid var(--line); border-radius:16px; padding:14px; margin-bottom:14px; }
+    .radio-pill-group { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px; }
+    .radio-label {
+      display:flex; align-items:center; gap:8px; background:white; border:1px solid var(--line);
+      padding:10px 12px; border-radius:12px; font-size:12px; font-weight:800; cursor:pointer; user-select:none;
+    }
+    /* .is-checked é aplicada via JS (fallback para navegadores sem :has) */
+    .radio-label.is-checked { border-color:var(--ink); background:#111; color:white; }
+    .radio-label input { accent-color: var(--green); }
+
+    .checkbox-urgency {
+      display:flex; align-items:flex-start; gap:10px; cursor:pointer; background:white;
+      border:1px solid var(--line); padding:12px; border-radius:14px; user-select:none;
+    }
+    .checkbox-urgency input { width:18px; height:18px; accent-color:var(--pink); margin-top:1px; flex-shrink:0; }
+    .checkbox-urgency span strong { display:block; font-size:13px; }
+    .checkbox-urgency span small { display:block; color:#777; font-size:11px; margin-top:2px; }
+
+    .delivery-address-wrap { margin-top:10px; display:none; }
+    .delivery-address-wrap.active { display:block; }
+    .delivery-address-wrap textarea {
+      width:100%; border:1px solid var(--line); border-radius:12px; padding:10px; font-size:12px;
+      min-height:64px; resize:vertical; outline:none;
+    }
+    .delivery-address-wrap textarea:focus { border-color:var(--ink); }
+    .delivery-note { font-size:11px; color:var(--pink); font-weight:800; margin-top:4px; display:block; }
+
+    .price-summary { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:20px; }
+    .price-box { background:#f7f7f7; border-radius:15px; padding:14px; min-width:0; }
+    .price-box span { display:block; color:#777; font-size:10px; text-transform:uppercase; letter-spacing:.1em; font-weight:850; }
+    .price-box strong { display:block; margin-top:6px; font-size:clamp(18px,5vw,27px); letter-spacing:-.06em; overflow-wrap:anywhere; }
+    .price-box.total { background:var(--ink); color:white; }
+    .price-box.total span { color:#c8c8c8; }
+
+    .quote-note { font-size:11px; color:#777; line-height:1.5; margin:14px 0 17px; }
+    .quote-card .btn { width:100%; }
+
+    /* Vantagens & Rodapé */
+    .benefits { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:30px 0; }
+    .benefit { border:1px solid var(--line); border-radius:17px; padding:15px; }
+    .benefit i { display:grid; place-items:center; width:30px; height:30px; border-radius:10px; background:var(--pink); font-style:normal; font-weight:1000; margin-bottom:12px; }
+    .benefit:nth-child(2) i { background:var(--green); }
+    .benefit:nth-child(3) i { background:var(--mustard); }
+    .benefit strong { display:block; font-size:13px; }
+    .benefit span { display:block; color:#777; font-size:11px; line-height:1.45; margin-top:5px; }
+
+    footer { padding:24px 0 34px; border-top:1px solid var(--line); color:#777; font-size:11px; line-height:1.6; }
+    .footer-row { display:flex; flex-direction:column; gap:8px; }
+    /* z-index acima do modal (1000) para que avisos fiquem sempre visíveis */
+    .toast { position:fixed; left:50%; bottom:18px; transform:translate(-50%,20px); opacity:0; pointer-events:none; background:#111; color:white; padding:12px 16px; border-radius:999px; font-size:12px; font-weight:800; transition:.2s; z-index:1100; width:max-content; max-width:calc(100% - 30px); text-align:center; }
+    .toast.show { opacity:1; transform:translate(-50%,0); }
+
+    :focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html, .category-tabs { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+
+    @media (min-width:760px) {
+      .category-tabs {
+        justify-content: center;
+        padding: 6px 16px 14px;
+        scroll-snap-type: none;
+      }
+    }
+
+    @media (min-width:860px) {
+      .wrap { width:min(1120px,100% - 56px); }
+      .hero { padding:42px 0 38px; }
+      .section { padding:48px 0 58px; }
+      .carousel-track { gap:22px; padding-left:calc((100% - 330px)/2); padding-right:calc((100% - 330px)/2); }
+      .model-card { flex-basis:330px; }
+      .quote-layout { grid-template-columns:.85fr 1.15fr; align-items:start; gap:44px; }
+      .form-group-grid { grid-template-columns: 1fr 1fr; }
+      .quote-card { padding:28px; }
+      .benefits { grid-template-columns:repeat(4,1fr); padding:40px 0; }
+      .footer-row { flex-direction:row; justify-content:space-between; align-items:center; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap topbar">
+    <a class="brand" href="#top" aria-label="CarnaTiller 2027 - início">
+      <span class="brand-mark">CT</span>
+      <span>CARNA TILLER<small>2027 • TILLER CONFECÇÕES</small></span>
+    </a>
+    <a class="pill" href="#orcamento">Simular orçamento ↗</a>
+  </header>
+
+  <main id="top">
+    <section class="wrap hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Coleção de Carnaval 2027</div>
+        <div class="hero-title-row">
+          <h1>Seu bloco.<br>Sua energia.<br><span class="neon">Seu abadá.</span></h1>
+          <div class="hero-top-media">
+            <img src="imagens/hero-destaque.png" alt="Logomarca CarnaTiller 2027" class="hero-png" id="heroPng">
+          </div>
+        </div>
+        <p>Escolha um modelo pronto CarnaTiller, encontre seu favorito e peça um orçamento personalizado para sua turma, bloco ou equipe.</p>
+        <div class="hero-actions">
+          <a class="btn green" href="#modelos">Explorar modelos <span aria-hidden="true">↓</span></a>
+          <a class="btn outline" href="#orcamento">Simulador com opções</a>
+        </div>
+        <div class="hero-stamp">
+          <span class="stamp-dots"><i style="background:var(--green)"></i><i style="background:var(--pink)"></i><i style="background:var(--mustard)"></i></span>
+          4 categorias · 200 modelos para escolher
+        </div>
+      </div>
+    </section>
+
+    <!-- Catálogo de Modelos -->
+    <section class="wrap section" id="modelos">
+      <div class="section-head">
+        <div class="eyebrow" style="margin-bottom:6px;">Escolha seu visual</div>
+        <h2>Modelos prontos<span style="color:var(--pink)">.</span></h2>
+        <p>Toque na foto para ampliar em tela cheia ou deslize para ver todos os modelos.</p>
+      </div>
+
+      <div class="category-nav-wrapper">
+        <nav class="category-tabs" id="categoryTabs" role="tablist" aria-label="Categorias de modelos">
+          <button class="tab active" type="button" role="tab" aria-selected="true" data-category="1" id="tab-1">01 · Neon (1-50)</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-category="2" id="tab-2">02 · Abstrato (51-100)</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-category="3" id="tab-3">03 · Tropical (101-150)</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-category="4" id="tab-4">04 · Minimal (151-200)</button>
+        </nav>
+      </div>
+
+      <div class="carousel-shell">
+        <button class="carousel-nav-btn prev" id="prevModel" type="button" aria-label="Modelo anterior">←</button>
+        <div class="carousel-track" id="carouselTrack" role="region" aria-label="Carrossel contínuo de modelos"></div>
+        <button class="carousel-nav-btn next" id="nextModel" type="button" aria-label="Próximo modelo">→</button>
+      </div>
+
+      <div class="carousel-hint">← Deslize para navegar · <b>Toque na estampa para abrir em tela cheia</b> →</div>
+
+      <div class="selected-bar">
+        <div class="selected-model-preview">
+          <button type="button" class="selected-thumb-wrap" id="selectedThumb" title="Clique para ampliar esta foto" aria-label="Ampliar foto do modelo selecionado">
+            <span class="selected-thumb-fallback" id="selectedThumbFallback">CT</span>
+            <img id="selectedThumbImg" alt="Miniatura do modelo selecionado">
+          </button>
+          <div class="selected-info" aria-live="polite">
+            <small>Modelo selecionado</small>
+            <strong id="selectedModel">Modelo 001 · Neon</strong>
+          </div>
+        </div>
+        <div class="selected-bar-actions">
+          <a class="btn green" href="#orcamento">Simular este modelo ↘</a>
+          <button class="btn outline" id="shareSelected" type="button">Copiar link ↗</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal de Tela Cheia (Lightbox) -->
+    <div id="imageModal" class="image-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
+      <div class="modal-backdrop" id="modalBackdrop"></div>
+      <div class="modal-box">
+        <button type="button" class="modal-close" id="modalClose" aria-label="Fechar visualização">✕</button>
+        <div class="modal-image-wrap">
+          <img id="modalImg" alt="Visualização em tela cheia">
+        </div>
+        <div class="modal-caption">
+          <div>
+            <strong id="modalTitle">Modelo 001</strong>
+            <span id="modalCategory">Neon</span>
+          </div>
+          <button class="btn green" id="modalSelectBtn" type="button">Escolher este modelo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Simulador de Orçamento -->
+    <section class="quote-section" id="orcamento">
+      <div class="wrap quote-layout">
+        <div class="quote-title">
+          <div class="eyebrow">Simulador interativo</div>
+          <h2>Vamos colocar<br>seu bloco na rua<span style="color:var(--pink)">?</span></h2>
+          <p>Ajuste quantidade, tipo de corte, tecido e entrega para ter uma estimativa precisa. O valor final pode ser confirmado e ajustado no WhatsApp.</p>
+        </div>
+
+        <div class="quote-card">
+          <div class="quantity-row">
+            <label for="quantity">Quantidade de abadás</label>
+            <div class="stepper">
+              <button type="button" class="stepper-btn" id="btnMinus" aria-label="Diminuir uma peça">−</button>
+              <input type="number" id="quantity" class="stepper-input" min="10" max="500" step="1" value="10" inputmode="numeric">
+              <button type="button" class="stepper-btn" id="btnPlus" aria-label="Aumentar uma peça">+</button>
+            </div>
+          </div>
+
+          <input id="quantityRange" type="range" min="10" max="500" step="1" value="10" aria-label="Controle deslizante de quantidade">
+          <div class="range-labels"><span>Mín.: 10 · Máx.: 500 peças</span><span>Descontos progressivos a partir de 50 un</span></div>
+
+          <div class="form-group-grid">
+            <div>
+              <label class="field-label" for="cutModel">Modelo do abadá</label>
+              <select id="cutModel" class="custom-select">
+                <option value="regata" data-cost="0">Regata Tradicional (Padrão)</option>
+                <option value="machao" data-cost="2.00">Machão (+ R$ 2,00 / un)</option>
+                <option value="manga" data-cost="4.50">Com Manga (+ R$ 4,50 / un)</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label" for="fabricType">Tipo de malha</label>
+              <select id="fabricType" class="custom-select">
+                <option value="helanquinha" data-cost="0">Helanquinha 100% poliéster</option>
+                <option value="dry" data-cost="3.00">Dry Fit Esportivo (+ R$ 3,00 / un)</option>
+                <option value="pp" data-cost="2.00">PP Premium Soft (+ R$ 2,00 / un)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="options-box">
+            <label class="checkbox-urgency">
+              <input type="checkbox" id="urgencyCheck">
+              <span>
+                <strong>Produção Express / Urgência (+15%)</strong>
+                <small>Prioridade máxima de corte, estamparia e costura para prazos curtos.</small>
+              </span>
+            </label>
+          </div>
+
+          <div class="options-box">
+            <span class="field-label">Forma de recebimento</span>
+            <div class="radio-pill-group">
+              <label class="radio-label is-checked">
+                <input type="radio" name="shippingMethod" value="retirada" checked>
+                <span>Retirada (Grátis)</span>
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="shippingMethod" value="entrega">
+                <span>Entrega no local</span>
+              </label>
+            </div>
+
+            <div class="delivery-address-wrap" id="deliveryAddressWrap">
+              <label class="field-label" for="deliveryAddress" style="margin-top:12px;">Endereço de entrega</label>
+              <textarea id="deliveryAddress" placeholder="Digite sua cidade, bairro e rua / CEP para cálculo do frete..."></textarea>
+              <span class="delivery-note">✦ Valor negociável no fechamento do pedido</span>
+            </div>
+          </div>
+
+          <div class="price-summary" aria-live="polite">
+            <div class="price-box">
+              <span>Valor por peça</span>
+              <strong id="unitPrice">R$ 35,00</strong>
+            </div>
+            <div class="price-box total">
+              <span>Total estimado</span>
+              <strong id="totalPrice">R$ 350,00</strong>
+            </div>
+          </div>
+
+          <p class="quote-note">Estimativa prévia calculada com base na configuração selecionada. Valores finais e prazos confirmados no atendimento.</p>
+          <button class="btn green" id="requestQuote" type="button">Solicitar orçamento no WhatsApp ↗</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap benefits" aria-label="Vantagens">
+      <div class="benefit"><i>✦</i><strong>200 modelos</strong><span>Quatro coleções exclusivas.</span></div>
+      <div class="benefit"><i>↗</i><strong>Totalmente adaptável</strong><span>Troque cores, nomes e corte.</span></div>
+      <div class="benefit"><i>＋</i><strong>Preço flexível</strong><span>Mais peças, menor valor unitário.</span></div>
+      <div class="benefit"><i>CT</i><strong>CarnaTiller 2027</strong><span>Qualidade em cada detalhe.</span></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <div><strong style="color:var(--ink)">CARNA TILLER 2027</strong><br>É a gente que faz o Carnaval acontecer!</div>
+      <div>© 2027 Tiller Confecções · Todos os direitos reservados.</div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // ===== Configuração =====
+    const WHATSAPP = "5584987065678";
+    const PRECO_BASE = 35.00;
+    const MIN_QTY = 10;
+    const MAX_QTY = 500;
+    const TOTAL_MODELS = 200;
+    const PRICE_TIERS = [
+      { min: 100, price: 29.90 },
+      { min: 50, price: 32.90 },
+      { min: 10, price: 35.00 }
+    ];
+    const CATEGORIES = [
+      { id: 1, name: "Neon", start: 1, end: 50, folder: "categoria-1" },
+      { id: 2, name: "Abstrato", start: 51, end: 100, folder: "categoria-2" },
+      { id: 3, name: "Tropical", start: 101, end: 150, folder: "categoria-3" },
+      { id: 4, name: "Minimal", start: 151, end: 200, folder: "categoria-4" }
+    ];
+
+    // ===== Elementos DOM =====
+    const track = document.getElementById("carouselTrack");
+    const categoryTabs = document.getElementById("categoryTabs");
+    const tabs = [...document.querySelectorAll(".tab")];
+    const selectedLabel = document.getElementById("selectedModel");
+    const selectedThumbWrap = document.getElementById("selectedThumb");
+    const selectedThumbImg = document.getElementById("selectedThumbImg");
+    const selectedThumbFallback = document.getElementById("selectedThumbFallback");
+    const heroPng = document.getElementById("heroPng");
+    const prevBtn = document.getElementById("prevModel");
+    const nextBtn = document.getElementById("nextModel");
+
+    const imageModal = document.getElementById("imageModal");
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const modalClose = document.getElementById("modalClose");
+    const modalImg = document.getElementById("modalImg");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalCategory = document.getElementById("modalCategory");
+    const modalSelectBtn = document.getElementById("modalSelectBtn");
+
+    const quantity = document.getElementById("quantity");
+    const quantityRange = document.getElementById("quantityRange");
+    const btnMinus = document.getElementById("btnMinus");
+    const btnPlus = document.getElementById("btnPlus");
+    const cutModel = document.getElementById("cutModel");
+    const fabricType = document.getElementById("fabricType");
+    const urgencyCheck = document.getElementById("urgencyCheck");
+    const shippingRadios = [...document.querySelectorAll('input[name="shippingMethod"]')];
+    const deliveryAddressWrap = document.getElementById("deliveryAddressWrap");
+    const deliveryAddress = document.getElementById("deliveryAddress");
+    const unitPriceEl = document.getElementById("unitPrice");
+    const totalPriceEl = document.getElementById("totalPrice");
+    const toast = document.getElementById("toast");
+
+    // ===== Estado =====
+    let currentCategory = 1;
+    let selectedNumber = 1;      // modelo escolhido pelo usuário
+    let activeNumber = 1;        // card centralizado no carrossel
+    let programmaticTarget = null; // destino de uma rolagem disparada pelo código
+    let programmaticTimer;
+    let scrollSettledTimer;
+    let isSilentJump = false;
+    let scrollTicking = false;
+    let toastTimer;
+    let hasInteractedWithCarousel = false;
+    let currentModalNumber = null;
+    let lastFocusedBeforeModal = null;
+    let modalClearTimer;
+    const missingImages = new Set(); // modelos cujas fotos não existem
+
+    heroPng.addEventListener("error", () => {
+      heroPng.parentElement.style.display = "none";
+    });
+
+    // ===== Utilitários =====
+    const pad3 = n => String(n).padStart(3, "0");
+    const money = value => value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    const modelName = n => `Modelo ${pad3(n)}`;
+    const categoryOf = n => CATEGORIES.find(c => n >= c.start && n <= c.end);
+    const clampModel = n => Math.max(1, Math.min(TOTAL_MODELS, n));
+
+    function imagePath(category, n) {
+      return `imagens/${category.folder}/modelo-${pad3(n)}.jpg`;
+    }
+
+    function modelUrl(n) {
+      return `${location.origin}${location.pathname}#modelo-${pad3(n)}`;
+    }
+
+    // Link só faz sentido para o cliente quando o site está publicado (http/https)
+    const isPublished = () => /^https?:$/.test(location.protocol);
+
+    function notify(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 2400);
+    }
+
+    function activateCarouselInteraction() {
+      if (!hasInteractedWithCarousel) {
+        hasInteractedWithCarousel = true;
+        track.classList.add("has-interacted");
+      }
+    }
+
+    // Centraliza um elemento dentro de um contêiner com rolagem horizontal.
+    // Usa getBoundingClientRect (funciona mesmo com transform: scale nos cards).
+    function centerInScroller(scroller, el, smooth = true) {
+      const sRect = scroller.getBoundingClientRect();
+      const eRect = el.getBoundingClientRect();
+      const elCenter = eRect.left + eRect.width / 2 - sRect.left;
+      const left = scroller.scrollLeft + elCenter - scroller.clientWidth / 2;
+      scroller.scrollTo({ left: Math.max(0, left), behavior: smooth ? "smooth" : "auto" });
+    }
+
+    function updateNavButtons() {
+      // Circuito fechado: as setas nunca ficam desabilitadas
+      prevBtn.disabled = false;
+      nextBtn.disabled = false;
+    }
+
+    // ===== Modal de tela cheia =====
+    function openImageModal(num) {
+      const category = categoryOf(num);
+      if (!category) return;
+      if (missingImages.has(num)) {
+        notify(`A foto do ${modelName(num)} ainda não está disponível.`);
+        return;
+      }
+
+      clearTimeout(modalClearTimer);
+      currentModalNumber = num;
+      modalImg.src = imagePath(category, num);
+      modalImg.alt = `${modelName(num)} · ${category.name} em tela cheia`;
+      modalTitle.textContent = modelName(num);
+      modalCategory.textContent = category.name;
+
+      lastFocusedBeforeModal = document.activeElement;
+      imageModal.classList.add("open");
+      imageModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      modalClose.focus({ preventScroll: true });
+    }
+
+    function closeImageModal() {
+      if (!imageModal.classList.contains("open")) return;
+      imageModal.classList.remove("open");
+      imageModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      // Remove a imagem só depois do fade-out (src="" geraria uma requisição inválida)
+      modalClearTimer = setTimeout(() => modalImg.removeAttribute("src"), 260);
+      if (lastFocusedBeforeModal && typeof lastFocusedBeforeModal.focus === "function") {
+        lastFocusedBeforeModal.focus({ preventScroll: true });
+      }
+    }
+
+    modalImg.addEventListener("error", () => {
+      if (!imageModal.classList.contains("open") || !modalImg.getAttribute("src")) return;
+      if (currentModalNumber) markMissing(currentModalNumber);
+      closeImageModal();
+      notify("Não foi possível carregar a foto deste modelo.");
+    });
+
+    modalClose.addEventListener("click", closeImageModal);
+    modalBackdrop.addEventListener("click", closeImageModal);
+
+    document.addEventListener("keydown", (e) => {
+      if (!imageModal.classList.contains("open")) return;
+      if (e.key === "Escape") {
+        closeImageModal();
+      } else if (e.key === "Tab") {
+        // Mantém o foco dentro do modal
+        const focusables = [modalClose, modalSelectBtn];
+        const idx = focusables.indexOf(document.activeElement);
+        e.preventDefault();
+        const next = e.shiftKey
+          ? focusables[(idx - 1 + focusables.length) % focusables.length]
+          : focusables[(idx + 1) % focusables.length];
+        next.focus();
+      }
+    });
+
+    modalSelectBtn.addEventListener("click", () => {
+      if (!currentModalNumber) return;
+      const num = currentModalNumber;
+      closeImageModal();
+      selectModel(num, true, true);
+      notify(`${modelName(num)} selecionado!`);
+    });
+
+    selectedThumbWrap.addEventListener("click", () => openImageModal(selectedNumber));
+
+    // ===== Catálogo =====
+    const getRealCard = n => track.querySelector(`.model-card[data-number="${n}"]:not([data-clone])`);
+
+    function markMissing(n) {
+      missingImages.add(n);
+      track.querySelectorAll(`.model-card[data-number="${n}"]`).forEach(card => {
+        card.classList.add("no-image");
+        const img = card.querySelector("img");
+        if (img) img.style.display = "none";
+        const hint = card.querySelector(".zoom-hint");
+        if (hint) hint.style.display = "none";
+        const art = card.querySelector(".model-art");
+        if (art) art.removeAttribute("title");
+      });
+      if (n === selectedNumber) selectedThumbWrap.classList.add("no-image");
+    }
+
+    function createCardElement(category, n, cloneSide = null) {
+      const card = document.createElement("article");
+      card.className = "model-card";
+      card.dataset.number = n;
+      card.dataset.category = category.id;
+      if (cloneSide) {
+        card.dataset.clone = cloneSide;
+        card.setAttribute("aria-hidden", "true");
+      }
+      card.innerHTML = `
+        <div class="model-art" data-zoom="${n}" title="Toque para ampliar em tela cheia">
+          <div class="zoom-hint">🔍 Ampliar</div>
+          <div class="placeholder-logo" aria-hidden="true">
+            <div class="crown">♛</div><strong>CARNA<br>TILLER</strong><small>2027</small><em>${category.name.toUpperCase()}</em>
+          </div>
+          <img src="${imagePath(category, n)}" alt="${modelName(n)} CarnaTiller" loading="lazy" decoding="async">
+        </div>
+        <div class="model-info">
+          <div class="model-info-top"><span class="model-number">CT · ${pad3(n)}</span><span class="model-number">${category.name}</span></div>
+          <h3>${modelName(n)}</h3>
+          <div class="model-actions">
+            <button class="choose" type="button" data-select="${n}">Selecionar modelo</button>
+            <a class="view" href="#modelo-${pad3(n)}" data-view="${n}">Link direto ↗</a>
+          </div>
+        </div>`;
+
+      card.querySelector("img").addEventListener("error", () => markMissing(n), { once: true });
+      return card;
+    }
+
+    function renderContinuousCatalog() {
+      const fragment = document.createDocumentFragment();
+      const CLONE_COUNT = 3;
+
+      // Clones do final antes do 001 (permite rolar para a esquerda até o 200)
+      for (let n = TOTAL_MODELS - CLONE_COUNT + 1; n <= TOTAL_MODELS; n++) {
+        fragment.appendChild(createCardElement(categoryOf(n), n, "head"));
+      }
+
+      CATEGORIES.forEach(category => {
+        for (let n = category.start; n <= category.end; n++) {
+          fragment.appendChild(createCardElement(category, n));
+        }
+      });
+
+      // Clones do início depois do 200 (permite rolar para a direita até o 001)
+      for (let n = 1; n <= CLONE_COUNT; n++) {
+        fragment.appendChild(createCardElement(categoryOf(n), n, "tail"));
+      }
+
+      track.appendChild(fragment);
+
+      track.addEventListener("click", (e) => {
+        const zoomEl = e.target.closest("[data-zoom]");
+        if (zoomEl) {
+          openImageModal(Number(zoomEl.dataset.zoom));
+          return;
+        }
+
+        const selectBtn = e.target.closest("[data-select]");
+        if (selectBtn) {
+          const num = Number(selectBtn.dataset.select);
+          selectModel(num, true, true);
+          notify(`${modelName(num)} selecionado!`);
+          return;
+        }
+
+        const viewLink = e.target.closest("[data-view]");
+        if (viewLink) {
+          e.preventDefault();
+          const num = Number(viewLink.dataset.view);
+          selectModel(num, true, true);
+          copyText(modelUrl(num), "Link direto copiado.");
+        }
+      });
+    }
+
+    function setActiveCard(n, cardEl = null) {
+      activeNumber = n;
+      track.querySelectorAll(".model-card.is-active").forEach(c => c.classList.remove("is-active"));
+      const card = cardEl || getRealCard(n);
+      if (card) card.classList.add("is-active");
+      updateNavButtons();
+    }
+
+    function silentJumpToCard(n, markInteracted = true) {
+      const real = getRealCard(n);
+      if (!real) return;
+      isSilentJump = true;
+      track.style.scrollSnapType = "none";
+      centerInScroller(track, real, false);
+      if (markInteracted) activateCarouselInteraction();
+      setActiveCard(n, real);
+      requestAnimationFrame(() => {
+        track.style.scrollSnapType = "";
+        requestAnimationFrame(() => { isSilentJump = false; });
+      });
+    }
+
+    function scrollToCardEl(card, n, smooth = true) {
+      if (!card) return;
+      activateCarouselInteraction();
+      setActiveCard(n, card);
+
+      // Durante a rolagem programada não deixamos o scroll "puxar" abas/cards intermediários
+      programmaticTarget = n;
+      clearTimeout(programmaticTimer);
+      programmaticTimer = setTimeout(() => { programmaticTarget = null; }, smooth ? 900 : 50);
+
+      centerInScroller(track, card, smooth);
+    }
+
+    function scrollToCard(n, smooth = true) {
+      scrollToCardEl(getRealCard(n), n, smooth);
+    }
+
+    function centerTab(categoryId, smooth = true) {
+      const activeTab = tabs.find(t => Number(t.dataset.category) === categoryId);
+      if (!activeTab || categoryTabs.scrollWidth <= categoryTabs.clientWidth) return;
+      centerInScroller(categoryTabs, activeTab, smooth);
+    }
+
+    function updateActiveTab(categoryId) {
+      if (currentCategory === categoryId) return;
+      currentCategory = categoryId;
+      tabs.forEach(tab => {
+        const isActive = Number(tab.dataset.category) === categoryId;
+        tab.classList.toggle("active", isActive);
+        tab.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+      centerTab(categoryId, true);
+    }
+
+    function findCenteredCard() {
+      const cards = track.children;
+      if (!cards.length) return null;
+      const tRect = track.getBoundingClientRect();
+      const center = tRect.left + track.clientWidth / 2;
+      let closest = null, distance = Infinity;
+      for (const card of cards) {
+        const rect = card.getBoundingClientRect();
+        const d = Math.abs(rect.left + rect.width / 2 - center);
+        if (d < distance) { distance = d; closest = card; }
+      }
+      return closest;
+    }
+
+    function updateActiveCard() {
+      scrollTicking = false;
+      if (isSilentJump || !hasInteractedWithCarousel) return;
+
+      const closest = findCenteredCard();
+      if (!closest) return;
+      const num = Number(closest.dataset.number);
+
+      if (programmaticTarget !== null) {
+        if (num === programmaticTarget) programmaticTarget = null;
+        return;
+      }
+
+      if (num !== activeNumber || !closest.classList.contains("is-active")) {
+        setActiveCard(num, closest);
+      }
+      updateActiveTab(Number(closest.dataset.category));
+    }
+
+    function updateSelectedThumb(category, n) {
+      selectedThumbWrap.classList.toggle("no-image", missingImages.has(n));
+      const showFallback = () => {
+        selectedThumbImg.style.display = "none";
+        selectedThumbFallback.style.display = "grid";
+        selectedThumbFallback.textContent = `CT${pad3(n).slice(-2)}`;
+      };
+      // Handlers definidos antes do src para não perder eventos de imagens em cache
+      selectedThumbImg.onload = () => {
+        selectedThumbImg.style.display = "block";
+        selectedThumbFallback.style.display = "none";
+      };
+      selectedThumbImg.onerror = () => {
+        showFallback();
+        markMissing(n);
+      };
+      if (missingImages.has(n)) {
+        selectedThumbImg.removeAttribute("src");
+        showFallback();
+      } else {
+        selectedThumbImg.alt = `Miniatura do ${modelName(n)}`;
+        selectedThumbImg.src = imagePath(category, n);
+      }
+    }
+
+    function selectModel(n, scroll = true, updateHash = true) {
+      n = clampModel(n);
+      selectedNumber = n;
+      const category = categoryOf(n);
+      if (category) {
+        selectedLabel.textContent = `${modelName(n)} · ${category.name}`;
+        updateActiveTab(category.id);
+        updateSelectedThumb(category, n);
+      }
+      if (scroll) scrollToCard(n);
+      if (updateHash) {
+        history.replaceState(null, "", `#modelo-${pad3(n)}`);
+      }
+    }
+
+    async function copyText(text, successMessage) {
+      try {
+        if (!navigator.clipboard || !window.isSecureContext) throw new Error("clipboard indisponível");
+        await navigator.clipboard.writeText(text);
+        notify(successMessage);
+      } catch (_) {
+        const temp = document.createElement("textarea");
+        temp.value = text;
+        temp.setAttribute("readonly", "");
+        temp.style.position = "fixed"; temp.style.opacity = "0"; temp.style.left = "-9999px";
+        document.body.appendChild(temp);
+        temp.select();
+        try {
+          const ok = document.execCommand("copy");
+          notify(ok ? successMessage : "Link do modelo: " + text);
+        } catch (e) {
+          notify("Link do modelo: " + text);
+        }
+        temp.remove();
+      }
+    }
+
+    // ===== Simulador =====
+    function priceFor(qty) {
+      const tier = PRICE_TIERS.find(t => qty >= t.min);
+      return tier ? tier.price : PRECO_BASE;
+    }
+
+    function clampQty(value) {
+      const n = Math.round(Number(value));
+      if (!Number.isFinite(n)) return MIN_QTY;
+      return Math.max(MIN_QTY, Math.min(MAX_QTY, n));
+    }
+
+    function calculateFullQuote() {
+      const qty = clampQty(quantity.value);
+      const baseUnit = priceFor(qty);
+
+      const cutAdditional = parseFloat(cutModel.selectedOptions[0]?.dataset.cost || 0);
+      const fabricAdditional = parseFloat(fabricType.selectedOptions[0]?.dataset.cost || 0);
+
+      let unit = baseUnit + cutAdditional + fabricAdditional;
+      const isUrgent = urgencyCheck.checked;
+      if (isUrgent) unit *= 1.15;
+
+      // Arredonda o unitário em centavos para que unitário × quantidade = total exibido
+      unit = Math.round(unit * 100) / 100;
+      const total = Math.round(unit * qty * 100) / 100;
+
+      return { qty, unit, total, isUrgent };
+    }
+
+    function updateQuote() {
+      const { qty, unit, total } = calculateFullQuote();
+      unitPriceEl.textContent = money(unit);
+      totalPriceEl.textContent = money(total);
+      btnMinus.disabled = qty <= MIN_QTY;
+      btnPlus.disabled = qty >= MAX_QTY;
+    }
+
+    function setQuantity(val) {
+      const clamped = clampQty(val);
+      quantity.value = clamped;
+      quantityRange.value = clamped;
+      updateQuote();
+      return clamped;
+    }
+
+    btnMinus.addEventListener("click", () => setQuantity(clampQty(quantity.value) - 1));
+    btnPlus.addEventListener("click", () => setQuantity(clampQty(quantity.value) + 1));
+
+    // Enquanto digita: não força o valor (permite apagar e digitar "120", por ex.)
+    quantity.addEventListener("input", () => {
+      const raw = quantity.value;
+      const n = Number(raw);
+      if (raw !== "" && Number.isFinite(n) && n >= MIN_QTY && n <= MAX_QTY) {
+        quantityRange.value = Math.round(n);
+      }
+      updateQuote();
+    });
+
+    // Ao sair do campo / Enter: corrige para o intervalo permitido
+    quantity.addEventListener("change", () => {
+      const raw = quantity.value;
+      const fixed = setQuantity(raw);
+      if (String(fixed) !== String(raw).trim()) {
+        notify(`Quantidade ajustada para ${fixed} (permitido de ${MIN_QTY} a ${MAX_QTY} peças).`);
+      }
+    });
+
+    quantityRange.addEventListener("input", () => setQuantity(quantityRange.value));
+
+    cutModel.addEventListener("change", updateQuote);
+    fabricType.addEventListener("change", updateQuote);
+    urgencyCheck.addEventListener("change", updateQuote);
+
+    shippingRadios.forEach(radio => {
+      radio.addEventListener("change", () => {
+        shippingRadios.forEach(r => r.closest(".radio-label").classList.toggle("is-checked", r.checked));
+        const isDelivery = radio.checked && radio.value === "entrega";
+        deliveryAddressWrap.classList.toggle("active", isDelivery);
+        if (isDelivery) deliveryAddress.focus({ preventScroll: true });
+      });
+    });
+
+    // ===== Navegação =====
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        const category = CATEGORIES.find(c => c.id === Number(tab.dataset.category));
+        if (category) selectModel(category.start, true, true);
+      });
+    });
+
+    // Rolagem do carrossel (limitada a 1 cálculo por frame) e reposicionamento em circuito fechado
+    track.addEventListener("scroll", () => {
+      if (isSilentJump) return;
+      activateCarouselInteraction();
+      if (!scrollTicking) {
+        scrollTicking = true;
+        requestAnimationFrame(updateActiveCard);
+      }
+      clearTimeout(scrollSettledTimer);
+      scrollSettledTimer = setTimeout(() => {
+        const centered = findCenteredCard();
+        if (centered && centered.hasAttribute("data-clone")) {
+          silentJumpToCard(Number(centered.dataset.number));
+        }
+      }, 160);
+    }, { passive: true });
+
+    // Setas em circuito fechado: 001 ← vai para 200; 200 → vai para 001
+    prevBtn.addEventListener("click", () => {
+      if (activeNumber <= 1) {
+        const clone200 = track.querySelector('.model-card[data-clone="head"][data-number="200"]');
+        selectModel(TOTAL_MODELS, false, true);
+        scrollToCardEl(clone200, TOTAL_MODELS, true);
+      } else {
+        selectModel(activeNumber - 1, true, true);
+      }
+    });
+    nextBtn.addEventListener("click", () => {
+      if (activeNumber >= TOTAL_MODELS) {
+        const clone1 = track.querySelector('.model-card[data-clone="tail"][data-number="1"]');
+        selectModel(1, false, true);
+        scrollToCardEl(clone1, 1, true);
+      } else {
+        selectModel(activeNumber + 1, true, true);
+      }
+    });
+
+    // Recentraliza ao girar a tela / redimensionar
+    let resizeTimer;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (hasInteractedWithCarousel) scrollToCard(activeNumber, false);
+        centerTab(currentCategory, false);
+      }, 150);
+    });
+
+    document.getElementById("shareSelected").addEventListener("click", () => {
+      copyText(modelUrl(selectedNumber), "Link direto do modelo copiado.");
+    });
+
+    // ===== WhatsApp =====
+    document.getElementById("requestQuote").addEventListener("click", () => {
+      const { qty, unit, total, isUrgent } = calculateFullQuote();
+      const category = categoryOf(selectedNumber);
+      const selectedShipping = document.querySelector('input[name="shippingMethod"]:checked')?.value || "retirada";
+
+      if (selectedShipping === "entrega" && !deliveryAddress.value.trim()) {
+        deliveryAddress.focus();
+        notify("Informe o endereço de entrega (ou envie assim e combine no WhatsApp).");
+        if (!deliveryAddress.dataset.warned) {
+          deliveryAddress.dataset.warned = "1";
+          return;
+        }
+      }
+
+      const cutName = cutModel.selectedOptions[0].text;
+      const fabricName = fabricType.selectedOptions[0].text;
+      const shippingText = selectedShipping === "entrega"
+        ? `Entrega no local (Endereço: ${deliveryAddress.value.trim() || "A informar"} - valor negociável)`
+        : "Retirada no local (Grátis)";
+
+      const modelLine = isPublished()
+        ? `• Modelo: ${modelName(selectedNumber)} (${modelUrl(selectedNumber)})`
+        : `• Modelo: ${modelName(selectedNumber)}`;
+
+      const messageLines = [
+        "Olá! Quero solicitar um orçamento CarnaTiller 2027 com as seguintes preferências:",
+        modelLine,
+        `• Categoria: ${category ? category.name : "-"}`,
+        `• Quantidade: ${qty} peças`,
+        `• Modelo do abadá: ${cutName}`,
+        `• Tipo de malha: ${fabricName}`,
+        `• Prazo / Urgência: ${isUrgent ? "Sim, prazo com urgência (+15%)" : "Prazo normal"}`,
+        `• Logística: ${shippingText}`,
         `• Estimativa do simulador: ${money(total)} (${money(unit)} por peça)`,
         "",
         "Por favor, confirmem a disponibilidade, valores e prazo de entrega."
       ];
+
       const waUrl = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(messageLines.join("\n"))}`;
       const win = window.open(waUrl, "_blank");
       if (win) {
@@ -11,13 +1226,16 @@
         location.href = waUrl;
       }
     });
+
     // ===== Inicialização =====
     function initApp() {
       renderContinuousCatalog();
       setQuantity(quantity.value);
       updateNavButtons();
+
       const hash = location.hash;
       const match = hash.match(/^#modelo-(\d{1,3})$/);
+
       if (match) {
         const n = clampModel(Number(match[1]));
         selectModel(n, false, false);
@@ -31,8 +1249,10 @@
           if (target) setTimeout(() => target.scrollIntoView(), 120);
         }
       }
+
       requestAnimationFrame(() => centerTab(currentCategory, false));
     }
+
     initApp();
   </script>
 </body>
