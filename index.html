@@ -1139,16 +1139,12 @@
               <label class="field-label" for="cutModel">Modelo do abadá</label>
               <select id="cutModel" class="custom-select">
                 <option value="regata" data-cost="0">Regata Tradicional (Padrão)</option>
-                <option value="machao" data-cost="2.00">Machão (+ R$ 2,00 / un)</option>
-                <option value="manga" data-cost="4.50">Com Manga (+ R$ 4,50 / un)</option>
               </select>
             </div>
             <div>
               <label class="field-label" for="fabricType">Tipo de malha</label>
               <select id="fabricType" class="custom-select">
                 <option value="helanquinha" data-cost="0">Helanquinha 100% poliéster</option>
-                <option value="dry" data-cost="3.00">Dry Fit Esportivo (+ R$ 3,00 / un)</option>
-                <option value="pp" data-cost="2.00">PP Premium Soft (+ R$ 2,00 / un)</option>
               </select>
             </div>
           </div>
@@ -1157,10 +1153,10 @@
             <span class="field-label">Acabamentos e opcionais</span>
             <div class="optional-addons-grid">
               <label class="addon-checkbox">
-                <input type="checkbox" id="addonVies" data-cost="0.50">
+                <input type="checkbox" id="addonVies" data-cost="1.00">
                 <span>
                   <strong>Viés colorido</strong>
-                  <small>+ R$ 0,50 / un · Destaque de cor nas cavas e gola</small>
+                  <small>+ R$ 1,00 / un · Destaque de cor nas cavas e gola</small>
                 </span>
               </label>
               <label class="addon-checkbox">
@@ -1232,7 +1228,7 @@
       <div class="section-head">
         <div class="eyebrow" style="margin-bottom:6px;">Transparência & Regras Claras</div>
         <h2>Condições de Pedido<span style="color:var(--pink)">.</span></h2>
-        <p>Tudo o que você precisa saber sobre prazos, acabamentos, descontos e formas de pagamento facilitadas da Tiller Confecções.</p>
+        <p>Tudo o que você precisa saber sobre prazos, acabamentos e formas de pagamento facilitadas da Tiller Confecções.</p>
       </div>
 
       <div class="rules-board">
@@ -1284,7 +1280,7 @@
             <li>
               <div class="rule-bullet">🎨</div>
               <div class="rule-content">
-                <strong>Viés colorido: + R$ 0,50 / unidade</strong>
+                <strong>Viés colorido: + R$ 1,00 / unidade</strong>
                 <span>Contorno da gola e cavas em cor contrastante neon ou personalizada.</span>
               </div>
             </li>
@@ -1316,16 +1312,9 @@
         <div class="rule-card rule-card-featured">
           <div class="rule-card-header">
             <span class="rule-badge badge-mustard">Facilidades</span>
-            <h4>Pagamentos & Descontos</h4>
+            <h4>Formas de Pagamento</h4>
           </div>
           <ul class="rule-list">
-            <li class="rule-highlight">
-              <div class="rule-bullet">💰</div>
-              <div class="rule-content">
-                <strong>5% DE DESCONTO À VISTA</strong>
-                <span>Válido para pagamentos em espécie, Pix ou transferência bancária.</span>
-              </div>
-            </li>
             <li>
               <div class="rule-bullet">📋</div>
               <div class="rule-content">
@@ -2094,7 +2083,7 @@
       const cutName = cutModel.selectedOptions[0].text;
       const fabricName = fabricType.selectedOptions[0].text;
       const addons = [];
-      if (addonVies && addonVies.checked) addons.push("Viés colorido (+R$ 0,50)");
+      if (addonVies && addonVies.checked) addons.push("Viés colorido (+R$ 1,00)");
       if (addonRustico && addonRustico.checked) addons.push("Acabamento rústico (-R$ 1,00)");
       if (addonEspecial && addonEspecial.checked) addons.push("Tamanho especial (+R$ 5,00)");
       const addonsText = addons.length ? addons.join(", ") : "Nenhum";
@@ -2118,7 +2107,7 @@
         `• Prazo / Urgência: ${isUrgent ? "Sim, prazo com urgência (+15%)" : "Prazo normal (10 a 15 dias úteis)"}`,
         `• Logística: ${shippingText}`,
         `• Estimativa do simulador: ${money(total)} (${money(unit)} por peça)`,
-        "• Condição de pagamento pretendida: Sinal 50% + 50% na entrega (ou 5% desc. à vista no Pix)",
+        "• Condição de pagamento pretendida: Sinal 50% + 50% na entrega",
         "",
         "Por favor, confirmem a disponibilidade, valores e prazo de entrega."
       ];
