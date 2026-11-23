@@ -308,15 +308,54 @@
     .stepper-btn:hover { background:var(--line); }
     .stepper-btn:disabled { opacity:.35; cursor:default; background:transparent; }
     .stepper-input {
-      width:60px; height:42px; border:0; background:white; text-align:center; font-size:18px;
+      width:68px; height:42px; border:0; background:white; text-align:center; font-size:17px;
       font-weight:1000; outline:none; border-left:1px solid var(--line); border-right:1px solid var(--line);
       -moz-appearance: textfield; appearance: textfield;
     }
     .stepper-input::-webkit-outer-spin-button, .stepper-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
     input[type="range"] { width:100%; margin:16px 0 6px; accent-color:#111; cursor:pointer; }
-    .range-labels { display:flex; justify-content:space-between; gap:10px; color:#777; font-size:11px; margin-bottom:20px; }
+    .range-labels { display:flex; justify-content:space-between; gap:10px; color:#777; font-size:11px; margin-bottom:10px; }
     .range-labels span:last-child { text-align:right; }
+    .tier-hint {
+      font-size:11.5px; font-weight:750; color:var(--ink); background:#f5f5f3;
+      border:1px solid var(--line); border-radius:11px; padding:8px 11px; margin-bottom:18px;
+      line-height:1.4;
+    }
+    .tier-hint strong { color:#0e7a00; }
+
+    /* Tabela de valores progressivos no simulador */
+    .tier-table-box {
+      margin-top:20px; background:white; border:1px solid var(--line); border-radius:20px;
+      padding:14px 16px; box-shadow:0 6px 20px rgba(0,0,0,.03);
+    }
+    .tier-table-box summary {
+      list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between;
+      font-size:12px; font-weight:900; text-transform:uppercase; letter-spacing:.08em; color:var(--ink);
+    }
+    .tier-table-box summary::-webkit-details-marker { display:none; }
+    .tier-table-box summary::after { content:"▾"; font-size:14px; transition:transform .2s ease; }
+    .tier-table-box[open] summary::after { transform:rotate(180deg); }
+    .tier-table-grid {
+      display:grid; grid-template-columns:1fr; gap:5px; margin-top:12px;
+    }
+    @media (min-width:520px) and (max-width:859px) {
+      .tier-table-grid { grid-template-columns:1fr 1fr; gap:6px; }
+    }
+    .tier-row {
+      display:flex; align-items:center; justify-content:space-between; gap:8px; width:100%;
+      border:1px solid var(--line); background:#fafafa; color:var(--ink); border-radius:10px;
+      padding:7px 11px; font-size:12px; cursor:pointer; text-align:left;
+      transition:background .18s ease, border-color .18s ease, color .18s ease, transform .15s ease;
+    }
+    .tier-row:hover { border-color:#cfcfcf; background:#f3f3f3; }
+    .tier-row span { font-weight:700; color:#555; }
+    .tier-row strong { font-weight:900; font-variant-numeric:tabular-nums; }
+    .tier-row.is-active {
+      background:var(--ink); border-color:var(--ink); color:white;
+    }
+    .tier-row.is-active span { color:#d4d4d4; }
+    .tier-row.is-active strong { color:var(--green); }
 
     .form-group-grid { display:grid; grid-template-columns:1fr; gap:14px; margin-bottom:18px; }
     .field-label { display:block; font-size:11px; font-weight:850; text-transform:uppercase; letter-spacing:.08em; color:#444; margin-bottom:6px; }
@@ -867,7 +906,7 @@
         </div>
         <div class="hero-stamp">
           <span class="stamp-dots"><i style="background:var(--green)"></i><i style="background:var(--pink)"></i><i style="background:var(--mustard)"></i></span>
-          4 categorias · 200 modelos para escolher
+          4 categorias · Mais de 180 modelos para escolher
         </div>
 
         <!-- Informações 01: Vantagens e Compromissos de Destaque -->
@@ -922,10 +961,10 @@
 
       <div class="category-nav-wrapper">
         <nav class="category-tabs" id="categoryTabs" role="tablist" aria-label="Categorias de modelos">
-          <button class="tab active" type="button" role="tab" aria-selected="true" data-category="1" id="tab-1">01 · Neon (1-50)</button>
-          <button class="tab" type="button" role="tab" aria-selected="false" data-category="2" id="tab-2">02 · Abstrato (51-100)</button>
-          <button class="tab" type="button" role="tab" aria-selected="false" data-category="3" id="tab-3">03 · Tropical (101-150)</button>
-          <button class="tab" type="button" role="tab" aria-selected="false" data-category="4" id="tab-4">04 · Minimal (151-200)</button>
+          <button class="tab active" type="button" role="tab" aria-selected="true" data-category="1" id="tab-1">01 · Ondas & Neon (1-40)</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-category="2" id="tab-2">02 · Tropical (51-100)</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-category="3" id="tab-3">03 · Verão & Brasil (101-150)</button>
+          <button class="tab" type="button" role="tab" aria-selected="false" data-category="4" id="tab-4">04 · Street & Pop (151-193)</button>
         </nav>
       </div>
 
@@ -945,7 +984,7 @@
           </button>
           <div class="selected-info" aria-live="polite">
             <small>Modelo selecionado</small>
-            <strong id="selectedModel">Modelo 001 · Neon</strong>
+            <strong id="selectedModel">Modelo 001 · Ondas & Neon</strong>
           </div>
         </div>
         <div class="selected-bar-actions">
@@ -966,7 +1005,7 @@
         <div class="modal-caption">
           <div>
             <strong id="modalTitle">Modelo 001</strong>
-            <span id="modalCategory">Neon</span>
+            <span id="modalCategory">Ondas & Neon</span>
           </div>
           <button class="btn green" id="modalSelectBtn" type="button">Escolher este modelo</button>
         </div>
@@ -1074,6 +1113,11 @@
           <div class="eyebrow">Simulador interativo</div>
           <h2>Vamos colocar<br>seu bloco na rua<span style="color:var(--pink)">?</span></h2>
           <p>Ajuste quantidade, tipo de corte, tecido e entrega para ter uma estimativa precisa. O valor final pode ser confirmado e ajustado no WhatsApp.</p>
+
+          <details class="tier-table-box" open>
+            <summary>Tabela de valores por peça</summary>
+            <div class="tier-table-grid" id="tierTableGrid" aria-label="Tabela progressiva de preços por quantidade"></div>
+          </details>
         </div>
 
         <div class="quote-card">
@@ -1081,13 +1125,14 @@
             <label for="quantity">Quantidade de abadás</label>
             <div class="stepper">
               <button type="button" class="stepper-btn" id="btnMinus" aria-label="Diminuir uma peça">−</button>
-              <input type="number" id="quantity" class="stepper-input" min="10" max="500" step="1" value="10" inputmode="numeric">
+              <input type="number" id="quantity" class="stepper-input" min="10" max="1000" step="1" value="10" inputmode="numeric">
               <button type="button" class="stepper-btn" id="btnPlus" aria-label="Aumentar uma peça">+</button>
             </div>
           </div>
 
-          <input id="quantityRange" type="range" min="10" max="500" step="1" value="10" aria-label="Controle deslizante de quantidade">
-          <div class="range-labels"><span>Mín.: 10 · Máx.: 500 peças</span><span>Descontos progressivos a partir de 50 un</span></div>
+          <input id="quantityRange" type="range" min="10" max="1000" step="1" value="10" aria-label="Controle deslizante de quantidade">
+          <div class="range-labels"><span>Mín.: 10 · Máx.: 1.000 peças</span><span>Descontos progressivos a partir de 11 un</span></div>
+          <div class="tier-hint" id="tierHint" aria-live="polite"></div>
 
           <div class="form-group-grid">
             <div>
@@ -1122,7 +1167,7 @@
                 <input type="checkbox" id="addonRustico" data-cost="1.00">
                 <span>
                   <strong>Acabamento rústico</strong>
-                  <small>+ R$ 1,00 / un · Barra e cavas a fio estilizadas</small>
+                  <small>− R$ 1,00 / un · Barra e cavas a fio estilizadas</small>
                 </span>
               </label>
               <label class="addon-checkbox">
@@ -1168,11 +1213,11 @@
           <div class="price-summary" aria-live="polite">
             <div class="price-box">
               <span>Valor por peça</span>
-              <strong id="unitPrice">R$ 35,00</strong>
+              <strong id="unitPrice">R$ 27,99</strong>
             </div>
             <div class="price-box total">
               <span>Total estimado</span>
-              <strong id="totalPrice">R$ 350,00</strong>
+              <strong id="totalPrice">R$ 279,90</strong>
             </div>
           </div>
 
@@ -1180,8 +1225,6 @@
           <button class="btn green" id="requestQuote" type="button">Solicitar orçamento no WhatsApp ↗</button>
         </div>
       </div>
-    </section>
-
     </section>
 
     <!-- Informações 03: Condições Comerciais, Produção & Pagamentos -->
@@ -1317,7 +1360,7 @@
     </section>
 
     <section class="wrap benefits" aria-label="Vantagens">
-      <div class="benefit"><i>✦</i><strong>200 modelos</strong><span>Quatro coleções exclusivas.</span></div>
+      <div class="benefit"><i>✦</i><strong>Mais de 180 modelos</strong><span>Quatro coleções exclusivas.</span></div>
       <div class="benefit"><i>↗</i><strong>Totalmente adaptável</strong><span>Troque cores, nomes e corte.</span></div>
       <div class="benefit"><i>＋</i><strong>Preço flexível</strong><span>Mais peças, menor valor unitário.</span></div>
       <div class="benefit"><i>CT</i><strong>CarnaTiller 2027</strong><span>Qualidade em cada detalhe.</span></div>
@@ -1336,21 +1379,37 @@
   <script>
     // ===== Configuração =====
     const WHATSAPP = "558421338804";
-    const PRECO_BASE = 35.00;
+    const PRECO_BASE = 27.99;
     const MIN_QTY = 10;
-    const MAX_QTY = 500;
-    const TOTAL_MODELS = 200;
+    const MAX_QTY = 1000;
     const PRICE_TIERS = [
-      { min: 100, price: 29.90 },
-      { min: 50, price: 32.90 },
-      { min: 10, price: 35.00 }
+      { min: 801, max: 1000, label: "801 a 1.000 peças", price: 12.50 },
+      { min: 501, max: 800,  label: "501 a 800 peças",   price: 12.99 },
+      { min: 401, max: 500,  label: "401 a 500 peças",   price: 13.50 },
+      { min: 301, max: 400,  label: "301 a 400 peças",   price: 14.50 },
+      { min: 201, max: 300,  label: "201 a 300 peças",   price: 14.99 },
+      { min: 151, max: 200,  label: "151 a 200 peças",   price: 15.99 },
+      { min: 101, max: 150,  label: "101 a 150 peças",   price: 16.50 },
+      { min: 81,  max: 100,  label: "81 a 100 peças",    price: 17.50 },
+      { min: 51,  max: 80,   label: "51 a 80 peças",     price: 18.50 },
+      { min: 31,  max: 50,   label: "31 a 50 peças",     price: 18.99 },
+      { min: 21,  max: 30,   label: "21 a 30 peças",     price: 19.99 },
+      { min: 11,  max: 20,   label: "11 a 20 peças",     price: 21.90 },
+      { min: 10,  max: 10,   label: "10 peças",          price: 27.99 }
     ];
     const CATEGORIES = [
-      { id: 1, name: "Neon", start: 1, end: 50, folder: "categoria-1" },
-      { id: 2, name: "Abstrato", start: 51, end: 100, folder: "categoria-2" },
-      { id: 3, name: "Tropical", start: 101, end: 150, folder: "categoria-3" },
-      { id: 4, name: "Minimal", start: 151, end: 200, folder: "categoria-4" }
+      { id: 1, name: "Ondas & Neon", start: 1, end: 40, folder: "categoria-1" },
+      { id: 2, name: "Tropical", start: 51, end: 100, folder: "categoria-2" },
+      { id: 3, name: "Verão & Brasil", start: 101, end: 150, folder: "categoria-3" },
+      { id: 4, name: "Street & Pop", start: 151, end: 193, folder: "categoria-4" }
     ];
+    const AVAILABLE_MODELS = CATEGORIES.flatMap(c =>
+      Array.from({ length: c.end - c.start + 1 }, (_, i) => c.start + i)
+    );
+    const TOTAL_MODELS = AVAILABLE_MODELS.length;
+    const FIRST_MODEL = AVAILABLE_MODELS[0];
+    const LAST_MODEL = AVAILABLE_MODELS[TOTAL_MODELS - 1];
+    const MODEL_INDEX = new Map(AVAILABLE_MODELS.map((n, i) => [n, i]));
 
     // ===== Elementos DOM =====
     const track = document.getElementById("carouselTrack");
@@ -1387,6 +1446,8 @@
     const deliveryAddress = document.getElementById("deliveryAddress");
     const unitPriceEl = document.getElementById("unitPrice");
     const totalPriceEl = document.getElementById("totalPrice");
+    const tierTableGrid = document.getElementById("tierTableGrid");
+    const tierHintEl = document.getElementById("tierHint");
     const toast = document.getElementById("toast");
 
     // ===== Estado =====
@@ -1414,7 +1475,17 @@
     const money = value => value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
     const modelName = n => `Modelo ${pad3(n)}`;
     const categoryOf = n => CATEGORIES.find(c => n >= c.start && n <= c.end);
-    const clampModel = n => Math.max(1, Math.min(TOTAL_MODELS, n));
+    function clampModel(n) {
+      const target = Math.round(Number(n));
+      if (!Number.isFinite(target)) return FIRST_MODEL;
+      if (MODEL_INDEX.has(target)) return target;
+      let best = FIRST_MODEL, bestDist = Infinity;
+      for (const m of AVAILABLE_MODELS) {
+        const d = Math.abs(m - target);
+        if (d < bestDist) { bestDist = d; best = m; }
+      }
+      return best;
+    }
 
     function imagePath(category, n) {
       return `imagens/${category.folder}/modelo-${pad3(n)}.jpg`;
@@ -1623,21 +1694,19 @@
       const fragment = document.createDocumentFragment();
       const CLONE_COUNT = 3;
 
-      // Clones do final antes do 001 (permite rolar para a esquerda até o 200)
-      for (let n = TOTAL_MODELS - CLONE_COUNT + 1; n <= TOTAL_MODELS; n++) {
+      // Clones do final antes do 001 (permite rolar para a esquerda até o último modelo)
+      AVAILABLE_MODELS.slice(-CLONE_COUNT).forEach(n => {
         fragment.appendChild(createCardElement(categoryOf(n), n, "head"));
-      }
-
-      CATEGORIES.forEach(category => {
-        for (let n = category.start; n <= category.end; n++) {
-          fragment.appendChild(createCardElement(category, n));
-        }
       });
 
-      // Clones do início depois do 200 (permite rolar para a direita até o 001)
-      for (let n = 1; n <= CLONE_COUNT; n++) {
+      AVAILABLE_MODELS.forEach(n => {
+        fragment.appendChild(createCardElement(categoryOf(n), n));
+      });
+
+      // Clones do início depois do último modelo (permite rolar para a direita até o 001)
+      AVAILABLE_MODELS.slice(0, CLONE_COUNT).forEach(n => {
         fragment.appendChild(createCardElement(categoryOf(n), n, "tail"));
-      }
+      });
 
       track.appendChild(fragment);
 
@@ -1818,9 +1887,30 @@
     }
 
     // ===== Simulador =====
+    const TIERS_ASC = [...PRICE_TIERS].reverse();
+
+    function renderTierTable() {
+      if (!tierTableGrid) return;
+      tierTableGrid.innerHTML = TIERS_ASC.map(t => `
+        <button type="button" class="tier-row" data-tier-min="${t.min}">
+          <span>${t.label}</span>
+          <strong>${money(t.price)}</strong>
+        </button>
+      `).join("");
+
+      tierTableGrid.addEventListener("click", (e) => {
+        const row = e.target.closest("[data-tier-min]");
+        if (!row) return;
+        setQuantity(Number(row.dataset.tierMin));
+      });
+    }
+
+    function tierFor(qty) {
+      return PRICE_TIERS.find(t => qty >= t.min) || PRICE_TIERS[PRICE_TIERS.length - 1];
+    }
+
     function priceFor(qty) {
-      const tier = PRICE_TIERS.find(t => qty >= t.min);
-      return tier ? tier.price : PRECO_BASE;
+      return tierFor(qty).price;
     }
 
     function clampQty(value) {
@@ -1854,10 +1944,27 @@
 
     function updateQuote() {
       const { qty, unit, total } = calculateFullQuote();
+      const activeTier = tierFor(qty);
       unitPriceEl.textContent = money(unit);
       totalPriceEl.textContent = money(total);
       btnMinus.disabled = qty <= MIN_QTY;
       btnPlus.disabled = qty >= MAX_QTY;
+
+      if (tierTableGrid) {
+        tierTableGrid.querySelectorAll(".tier-row").forEach(row => {
+          row.classList.toggle("is-active", Number(row.dataset.tierMin) === activeTier.min);
+        });
+      }
+
+      if (tierHintEl) {
+        const idx = TIERS_ASC.findIndex(t => t.min === activeTier.min);
+        const nextTier = idx >= 0 && idx < TIERS_ASC.length - 1 ? TIERS_ASC[idx + 1] : null;
+        if (nextTier) {
+          tierHintEl.innerHTML = `Faixa atual: <strong>${activeTier.label}</strong> (${money(activeTier.price)}/un) · A partir de ${nextTier.min} un cai para <strong>${money(nextTier.price)}/un</strong>`;
+        } else {
+          tierHintEl.innerHTML = `Faixa atual: <strong>${activeTier.label}</strong> — menor valor unitário da tabela (${money(activeTier.price)}/un)!`;
+        }
+      }
     }
 
     function setQuantity(val) {
@@ -1933,23 +2040,25 @@
       }, 160);
     }, { passive: true });
 
-    // Setas em circuito fechado: 001 ← vai para 200; 200 → vai para 001
+    // Setas em circuito fechado: 001 ← vai para o último (193); 193 → vai para 001 (pulando lacunas)
     prevBtn.addEventListener("click", () => {
-      if (activeNumber <= 1) {
-        const clone200 = track.querySelector('.model-card[data-clone="head"][data-number="200"]');
-        selectModel(TOTAL_MODELS, false, true);
-        scrollToCardEl(clone200, TOTAL_MODELS, true);
+      const idx = MODEL_INDEX.get(activeNumber) ?? 0;
+      if (idx <= 0) {
+        const cloneLast = track.querySelector(`.model-card[data-clone="head"][data-number="${LAST_MODEL}"]`);
+        selectModel(LAST_MODEL, false, true);
+        scrollToCardEl(cloneLast, LAST_MODEL, true);
       } else {
-        selectModel(activeNumber - 1, true, true);
+        selectModel(AVAILABLE_MODELS[idx - 1], true, true);
       }
     });
     nextBtn.addEventListener("click", () => {
-      if (activeNumber >= TOTAL_MODELS) {
-        const clone1 = track.querySelector('.model-card[data-clone="tail"][data-number="1"]');
-        selectModel(1, false, true);
-        scrollToCardEl(clone1, 1, true);
+      const idx = MODEL_INDEX.get(activeNumber) ?? 0;
+      if (idx >= TOTAL_MODELS - 1) {
+        const cloneFirst = track.querySelector(`.model-card[data-clone="tail"][data-number="${FIRST_MODEL}"]`);
+        selectModel(FIRST_MODEL, false, true);
+        scrollToCardEl(cloneFirst, FIRST_MODEL, true);
       } else {
-        selectModel(activeNumber + 1, true, true);
+        selectModel(AVAILABLE_MODELS[idx + 1], true, true);
       }
     });
 
@@ -2027,6 +2136,7 @@
     // ===== Inicialização =====
     function initApp() {
       renderContinuousCatalog();
+      renderTierTable();
       setQuantity(quantity.value);
       updateNavButtons();
 
