@@ -374,7 +374,7 @@
     .custom-select:focus { border-color:var(--ink); }
 
     .options-box { background:#fafafa; border:1px solid var(--line); border-radius:16px; padding:14px; margin-bottom:14px; }
-    .radio-pill-group { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px; }
+    .radio-pill-group { display:grid; grid-template-columns:1fr; gap:8px; margin-top:6px; }
     .radio-label {
       display:flex; align-items:center; gap:8px; background:white; border:1px solid var(--line);
       padding:10px 12px; border-radius:12px; font-size:12px; font-weight:800; cursor:pointer; user-select:none;
@@ -460,9 +460,6 @@
       background: linear-gradient(135deg, #ffffff 0%, #fff7fb 100%);
       border-color: rgba(255,20,147,.35);
       grid-column: 1 / -1;
-    }
-    @media (min-width: 900px) {
-      .perk-card.perk-seal { grid-column: span 2; }
     }
     .perk-icon {
       width: 38px;
@@ -935,13 +932,6 @@
             </div>
           </div>
           <div class="perk-card">
-            <div class="perk-icon">🏠</div>
-            <div class="perk-body">
-              <strong>ENTREGA A DOMICÍLIO</strong>
-              <span>Receba direto no seu endereço com comodidade</span>
-            </div>
-          </div>
-          <div class="perk-card">
             <div class="perk-icon">★</div>
             <div class="perk-body">
               <strong>MELHOR CUSTO-BENEFÍCIO</strong>
@@ -1120,7 +1110,7 @@
         <div class="quote-title">
           <div class="eyebrow">Simulador interativo</div>
           <h2>Vamos colocar<br>seu bloco na rua<span style="color:var(--pink)">?</span></h2>
-          <p>Ajuste quantidade, tipo de corte, tecido e entrega para ter uma estimativa precisa. O valor final pode ser confirmado e ajustado no WhatsApp.</p>
+          <p>Ajuste quantidade, acabamentos e prazo para ter uma estimativa precisa. O valor final pode ser confirmado e ajustado no WhatsApp.</p>
 
           <details class="tier-table-box" open>
             <summary>Tabela de valores por peça</summary>
@@ -1199,18 +1189,8 @@
             <div class="radio-pill-group">
               <label class="radio-label is-checked">
                 <input type="radio" name="shippingMethod" value="retirada" checked>
-                <span>Retirada (Grátis)</span>
+                <span>Retirada no local (Grátis)</span>
               </label>
-              <label class="radio-label">
-                <input type="radio" name="shippingMethod" value="entrega">
-                <span>Entrega no local</span>
-              </label>
-            </div>
-
-            <div class="delivery-address-wrap" id="deliveryAddressWrap">
-              <label class="field-label" for="deliveryAddress" style="margin-top:12px;">Endereço de entrega</label>
-              <textarea id="deliveryAddress" placeholder="Digite sua cidade, bairro e rua / CEP para cálculo do frete..."></textarea>
-              <span class="delivery-note">✦ Valor negociável no fechamento do pedido</span>
             </div>
           </div>
 
@@ -1438,9 +1418,6 @@
     const addonVies = document.getElementById("addonVies");
     const addonRustico = document.getElementById("addonRustico");
     const addonEspecial = document.getElementById("addonEspecial");
-    const shippingRadios = [...document.querySelectorAll('input[name="shippingMethod"]')];
-    const deliveryAddressWrap = document.getElementById("deliveryAddressWrap");
-    const deliveryAddress = document.getElementById("deliveryAddress");
     const unitPriceEl = document.getElementById("unitPrice");
     const totalPriceEl = document.getElementById("totalPrice");
     const tierTableGrid = document.getElementById("tierTableGrid");
@@ -2018,15 +1995,6 @@
     if (addonRustico) addonRustico.addEventListener("change", updateQuote);
     if (addonEspecial) addonEspecial.addEventListener("change", updateQuote);
 
-    shippingRadios.forEach(radio => {
-      radio.addEventListener("change", () => {
-        shippingRadios.forEach(r => r.closest(".radio-label").classList.toggle("is-checked", r.checked));
-        const isDelivery = radio.checked && radio.value === "entrega";
-        deliveryAddressWrap.classList.toggle("active", isDelivery);
-        if (isDelivery) deliveryAddress.focus({ preventScroll: true });
-      });
-    });
-
     // ===== Navegação =====
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
@@ -2095,16 +2063,7 @@
     document.getElementById("requestQuote").addEventListener("click", () => {
       const { qty, unit, total, isUrgent } = calculateFullQuote();
       const category = categoryOf(selectedNumber);
-      const selectedShipping = document.querySelector('input[name="shippingMethod"]:checked')?.value || "retirada";
-
-      if (selectedShipping === "entrega" && !deliveryAddress.value.trim()) {
-        deliveryAddress.focus();
-        notify("Informe o endereço de entrega (ou envie assim e combine no WhatsApp).");
-        if (!deliveryAddress.dataset.warned) {
-          deliveryAddress.dataset.warned = "1";
-          return;
-        }
-      }
+      const selectedShipping = "retirada";
 
       const cutName = cutModel.selectedOptions[0].text;
       const fabricName = fabricType.selectedOptions[0].text;
@@ -2114,9 +2073,7 @@
       if (addonEspecial && addonEspecial.checked) addons.push("Tamanho especial (+R$ 5,00)");
       const addonsText = addons.length ? addons.join(", ") : "Nenhum";
 
-      const shippingText = selectedShipping === "entrega"
-        ? `Entrega no local (Endereço: ${deliveryAddress.value.trim() || "A informar"} - valor negociável)`
-        : "Retirada no local (Grátis)";
+      const shippingText = "Retirada no local (Grátis)";
 
       const modelLine = isPublished()
         ? `• Modelo: ${modelName(selectedNumber)} (${modelUrl(selectedNumber)})`
@@ -2133,9 +2090,9 @@
         `• Prazo / Urgência: ${isUrgent ? "Sim, prazo com urgência (+15%)" : "Prazo normal (10 a 15 dias úteis)"}`,
         `• Logística: ${shippingText}`,
         `• Estimativa do simulador: ${money(total)} (${money(unit)} por peça)`,
-        "• Condição de pagamento pretendida: Sinal 50% + 50% na entrega",
+        "• Condição de pagamento pretendida: Sinal 50% + 50% na retirada",
         "",
-        "Por favor, confirmem a disponibilidade, valores e prazo de entrega."
+        "Por favor, confirmem a disponibilidade, valores e prazo para retirada."
       ];
 
       trackEvent("solicitar_orcamento_whatsapp", {
